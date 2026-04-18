@@ -1,4 +1,4 @@
-# Stefan Laza — Technical Delivery Lead
+# Stefan Lazarevic
 
 Interactive portfolio showcasing cloud architecture, DevOps engineering, and technical project delivery.
 
