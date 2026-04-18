@@ -2,7 +2,7 @@
 
 Interactive portfolio showcasing cloud architecture, DevOps engineering, and technical project delivery.
 
-**Live site:** [stefanlaza.github.io/DEVOPS](https://stefanlaza.github.io/DEVOPS)
+
 
 ## What's Inside
 
