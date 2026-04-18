@@ -222,23 +222,16 @@ rect[data-node]:hover{filter:brightness(1.2)}
 <nav>
   <span class="nav-name">Stefan Lazarevic</span>
   <div class="nav-links">
-    <a href="#aws">AWS</a>
-    <a href="#cisco">Network</a>
-    <a href="#etl">ETL</a>
-    <a href="#batch">Batch</a>
-    <a href="#microservices">Microservices</a>
-    <a href="#monolith">Monolith</a>
     <a href="#ai-work">AI</a>
     <a href="#services">Services</a>
     <a href="#case-studies">Impact</a>
-    <a href="#monitoring">Dashboard</a>
-    <a href="#adrs">ADRs</a>
     <a href="#timeline">Timeline</a>
     <a href="#risks">Risks</a>
     <a href="#delivery">Delivery</a>
     <a href="#topology">Team</a>
     <a href="#retros">Retros</a>
     <a href="#escalation">Escalation</a>
+    <a href="#tutorials">Tutorials</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
@@ -247,83 +240,7 @@ rect[data-node]:hover{filter:brightness(1.2)}
 <section id="hero">
   <div class="tag reveal" style="color:var(--green)">Available for hire</div>
   <h1 class="reveal">Technical<br>Product Manager.</h1>
-  <p class="sub reveal">I ship enterprise FinTech and AI platforms, lead engineering teams, and keep production running. Real delivery — visualized.</p>
-</section>
-
-<!-- ══════════ 1. AWS 3-TIER ARCHITECTURE ══════════ -->
-<section id="aws" class="alt-bg">
-  <div class="tag reveal" style="color:var(--aws)">Amazon Web Services</div>
-  <h2 class="reveal">AWS 3-Tier Architecture</h2>
-  <p class="sub reveal">Users hit CloudFront CDN, requests route through ALB into private EC2 instances across availability zones, backed by RDS Multi-AZ and ElastiCache, with S3 for static assets.</p>
-
-  <div class="diagram reveal">
-    <span class="diagram-title" style="color:var(--aws)">AWS — Production VPC</span>
-    <span class="hint">Click any service to trace its connections</span>
-    <svg viewBox="0 0 960 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="g1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-      <rect x="200" y="40" width="720" height="440" rx="20" fill="none" stroke="rgba(255,153,0,0.12)" stroke-width="1.5" stroke-dasharray="8,4"/>
-      <text x="220" y="68" fill="rgba(255,153,0,0.4)" font-size="10" font-weight="700" letter-spacing="0.1em">VPC 10.0.0.0/16</text>
-      <rect x="280" y="90" width="280" height="160" rx="12" fill="rgba(74,158,255,0.04)" stroke="rgba(74,158,255,0.1)" stroke-width="1"/>
-      <text x="300" y="112" fill="rgba(74,158,255,0.5)" font-size="8" font-weight="600" letter-spacing="0.08em">PUBLIC SUBNET — AZ-1</text>
-      <rect x="280" y="280" width="280" height="180" rx="12" fill="rgba(167,139,250,0.04)" stroke="rgba(167,139,250,0.1)" stroke-width="1"/>
-      <text x="300" y="302" fill="rgba(167,139,250,0.5)" font-size="8" font-weight="600" letter-spacing="0.08em">PRIVATE SUBNET — AZ-1</text>
-      <rect x="600" y="280" width="280" height="180" rx="12" fill="rgba(167,139,250,0.04)" stroke="rgba(167,139,250,0.1)" stroke-width="1"/>
-      <text x="620" y="302" fill="rgba(167,139,250,0.5)" font-size="8" font-weight="600" letter-spacing="0.08em">PRIVATE SUBNET — AZ-2</text>
-      <rect x="20" y="135" width="100" height="60" rx="14" fill="#111118" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" data-node="users"/>
-      <text x="70" y="165" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Users</text>
-      <text x="70" y="180" text-anchor="middle" fill="#6e6e80" font-size="7" font-weight="600">HTTPS</text>
-      <rect x="295" y="120" width="90" height="56" rx="12" fill="#111118" stroke="rgba(255,153,0,0.3)" stroke-width="1.5" data-node="r53"/>
-      <text x="340" y="148" text-anchor="middle" fill="#ff9900" font-size="10" font-weight="700">Route 53</text>
-      <text x="340" y="163" text-anchor="middle" fill="#6e6e80" font-size="7">DNS</text>
-      <rect x="430" y="120" width="100" height="56" rx="12" fill="#111118" stroke="rgba(255,153,0,0.3)" stroke-width="1.5" data-node="cf"/>
-      <text x="480" y="148" text-anchor="middle" fill="#ff9900" font-size="10" font-weight="700">CloudFront</text>
-      <text x="480" y="163" text-anchor="middle" fill="#6e6e80" font-size="7">CDN Edge</text>
-      <rect x="430" y="210" width="100" height="50" rx="12" fill="#111118" stroke="rgba(74,158,255,0.3)" stroke-width="1.5" data-node="alb"/>
-      <text x="480" y="236" text-anchor="middle" fill="#4a9eff" font-size="10" font-weight="700">ALB</text>
-      <text x="480" y="249" text-anchor="middle" fill="#6e6e80" font-size="7">Load Balancer</text>
-      <rect x="310" y="320" width="90" height="56" rx="12" fill="#111118" stroke="rgba(74,158,255,0.3)" stroke-width="1.5" data-node="ec2a"/>
-      <text x="355" y="348" text-anchor="middle" fill="#4a9eff" font-size="10" font-weight="700">EC2</text>
-      <text x="355" y="363" text-anchor="middle" fill="#6e6e80" font-size="7">App Server 1</text>
-      <rect x="630" y="320" width="90" height="56" rx="12" fill="#111118" stroke="rgba(74,158,255,0.3)" stroke-width="1.5" data-node="ec2b"/>
-      <text x="675" y="348" text-anchor="middle" fill="#4a9eff" font-size="10" font-weight="700">EC2</text>
-      <text x="675" y="363" text-anchor="middle" fill="#6e6e80" font-size="7">App Server 2</text>
-      <rect x="430" y="410" width="100" height="56" rx="12" fill="#111118" stroke="rgba(167,139,250,0.3)" stroke-width="1.5" data-node="rds"/>
-      <text x="480" y="438" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="700">RDS</text>
-      <text x="480" y="453" text-anchor="middle" fill="#6e6e80" font-size="7">Multi-AZ MySQL</text>
-      <rect x="750" y="410" width="100" height="56" rx="12" fill="#111118" stroke="rgba(248,113,113,0.3)" stroke-width="1.5" data-node="redis"/>
-      <text x="800" y="438" text-anchor="middle" fill="#f87171" font-size="10" font-weight="700">ElastiCache</text>
-      <text x="800" y="453" text-anchor="middle" fill="#6e6e80" font-size="7">Redis Cluster</text>
-      <rect x="630" y="120" width="90" height="56" rx="12" fill="#111118" stroke="rgba(52,211,153,0.3)" stroke-width="1.5" data-node="s3"/>
-      <text x="675" y="148" text-anchor="middle" fill="#34d399" font-size="10" font-weight="700">S3</text>
-      <text x="675" y="163" text-anchor="middle" fill="#6e6e80" font-size="7">Static Assets</text>
-      <rect x="800" y="120" width="90" height="56" rx="12" fill="#111118" stroke="rgba(248,113,113,0.3)" stroke-width="1.5" data-node="cw"/>
-      <text x="845" y="148" text-anchor="middle" fill="#f87171" font-size="10" font-weight="700">CloudWatch</text>
-      <text x="845" y="163" text-anchor="middle" fill="#6e6e80" font-size="7">Monitoring</text>
-      <path d="M120,165 C180,165 240,148 295,148" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" id="aws-p1" data-path-nodes="users r53"/>
-      <path d="M385,148 L430,148" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" id="aws-p2" data-path-nodes="r53 cf"/>
-      <path d="M480,176 L480,210" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" id="aws-p3" data-path-nodes="cf alb"/>
-      <path d="M480,260 C480,290 400,320 400,348" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" id="aws-p4" data-path-nodes="alb ec2a"/>
-      <path d="M480,260 C480,290 620,320 630,348" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" id="aws-p5" data-path-nodes="alb ec2b"/>
-      <path d="M355,376 C355,410 430,430 430,438" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" id="aws-p6" data-path-nodes="ec2a rds"/>
-      <path d="M675,376 C675,410 530,430 530,438" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" id="aws-p7" data-path-nodes="ec2b rds"/>
-      <path d="M675,376 L750,438" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" id="aws-p8" data-path-nodes="ec2b redis"/>
-      <path d="M530,148 L630,148" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" id="aws-p9" data-path-nodes="cf s3"/>
-      <path d="M720,148 L800,148" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" stroke-dasharray="4,3" id="aws-p10" data-path-nodes="s3 cw"/>
-      <circle r="4" fill="#ff9900" filter="url(#g1)" data-path-nodes="users r53"><animateMotion dur="2.5s" repeatCount="indefinite"><mpath href="#aws-p1"/></animateMotion></circle>
-      <circle r="3.5" fill="#ff9900" filter="url(#g1)" data-path-nodes="r53 cf"><animateMotion dur="1s" repeatCount="indefinite" begin="0.3s"><mpath href="#aws-p2"/></animateMotion></circle>
-      <circle r="3.5" fill="#4a9eff" filter="url(#g1)" data-path-nodes="cf alb"><animateMotion dur="1.2s" repeatCount="indefinite" begin="0.6s"><mpath href="#aws-p3"/></animateMotion></circle>
-      <circle r="4" fill="#4a9eff" filter="url(#g1)" data-path-nodes="alb ec2a"><animateMotion dur="2s" repeatCount="indefinite" begin="1s"><mpath href="#aws-p4"/></animateMotion></circle>
-      <circle r="4" fill="#4a9eff" filter="url(#g1)" data-path-nodes="alb ec2b"><animateMotion dur="2s" repeatCount="indefinite" begin="1.5s"><mpath href="#aws-p5"/></animateMotion></circle>
-      <circle r="3" fill="#a78bfa" filter="url(#g1)" data-path-nodes="ec2a rds"><animateMotion dur="2s" repeatCount="indefinite" begin="2s"><mpath href="#aws-p6"/></animateMotion></circle>
-      <circle r="3" fill="#a78bfa" filter="url(#g1)" data-path-nodes="ec2b rds"><animateMotion dur="2s" repeatCount="indefinite" begin="2.4s"><mpath href="#aws-p7"/></animateMotion></circle>
-      <circle r="3" fill="#f87171" filter="url(#g1)" data-path-nodes="ec2b redis"><animateMotion dur="1.5s" repeatCount="indefinite" begin="1.8s"><mpath href="#aws-p8"/></animateMotion></circle>
-      <circle r="3" fill="#34d399" filter="url(#g1)" data-path-nodes="cf s3"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.8s"><mpath href="#aws-p9"/></animateMotion></circle>
-      <circle r="2.5" fill="#f87171" filter="url(#g1)" data-path-nodes="s3 cw"><animateMotion dur="2s" repeatCount="indefinite" begin="3s"><mpath href="#aws-p10"/></animateMotion></circle>
-    </svg>
-  </div>
-  <a href="tutorials/aws-3tier.html" class="tut-link reveal">View Full Tutorial — AWS 3-Tier Setup Guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+  <p class="sub reveal">Technical Product Manager — FinTech, SaaS, and AI platforms. Queens, New York. Green Card holder, no sponsorship required.</p>
 </section>
 
 <!-- ══════════ AI WORK ══════════ -->
@@ -489,190 +406,6 @@ rect[data-node]:hover{filter:brightness(1.2)}
         <span>No runbooks, 2hr MTTR</span>
         <span class="arrow">&rarr;</span>
         <span>Automated failover, 23min MTTR</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ MONITORING DASHBOARD ══════════ -->
-<section id="monitoring">
-  <div class="tag reveal" style="color:var(--red)">Observability</div>
-  <h2 class="reveal">Live Dashboard</h2>
-  <p class="sub reveal">A production-grade monitoring view — the kind I build and maintain for every system I run.</p>
-
-  <div class="dashboard reveal">
-    <div class="dash-header">
-      <span class="dash-title">Production &mdash; us-east-1</span>
-      <span class="dash-status"><span class="dot"></span> All Systems Operational</span>
-    </div>
-    <div class="dash-grid">
-      <div class="dash-stat">
-        <div class="dash-stat-val" style="color:var(--green)" id="dash-uptime">99.98%</div>
-        <div class="dash-stat-label">Uptime (30d)</div>
-      </div>
-      <div class="dash-stat">
-        <div class="dash-stat-val" style="color:var(--blue)" id="dash-latency">42ms</div>
-        <div class="dash-stat-label">P95 Latency</div>
-      </div>
-      <div class="dash-stat">
-        <div class="dash-stat-val" style="color:var(--cyan)" id="dash-rps">1.2K</div>
-        <div class="dash-stat-label">Requests/sec</div>
-      </div>
-      <div class="dash-stat">
-        <div class="dash-stat-val" style="color:var(--green)" id="dash-errors">0.02%</div>
-        <div class="dash-stat-label">Error Rate</div>
-      </div>
-    </div>
-    <div class="dash-charts">
-      <div class="dash-chart">
-        <div class="dash-chart-title">Request Latency (ms) — 24h</div>
-        <svg id="latency-chart" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="latGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a9eff" stop-opacity="0.3"/><stop offset="100%" stop-color="#4a9eff" stop-opacity="0"/></linearGradient></defs>
-          <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <line x1="0" y1="60" x2="400" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <line x1="0" y1="90" x2="400" y2="90" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <text x="2" y="28" fill="rgba(255,255,255,0.15)" font-size="7">100ms</text>
-          <text x="2" y="58" fill="rgba(255,255,255,0.15)" font-size="7">50ms</text>
-          <text x="2" y="88" fill="rgba(255,255,255,0.15)" font-size="7">25ms</text>
-          <path d="M0,70 Q20,65 40,68 T80,60 T120,55 T160,62 T200,48 T240,52 T280,45 T320,50 T360,42 T400,44 L400,120 L0,120Z" fill="url(#latGrad)"/>
-          <path d="M0,70 Q20,65 40,68 T80,60 T120,55 T160,62 T200,48 T240,52 T280,45 T320,50 T360,42 T400,44" stroke="#4a9eff" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <circle cx="400" cy="44" r="3" fill="#4a9eff"/>
-        </svg>
-      </div>
-      <div class="dash-chart">
-        <div class="dash-chart-title">Error Rate (%) — 24h</div>
-        <svg viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="errGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399" stop-opacity="0.2"/><stop offset="100%" stop-color="#34d399" stop-opacity="0"/></linearGradient></defs>
-          <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <line x1="0" y1="60" x2="400" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <line x1="0" y1="90" x2="400" y2="90" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <text x="2" y="28" fill="rgba(255,255,255,0.15)" font-size="7">1.0%</text>
-          <text x="2" y="58" fill="rgba(255,255,255,0.15)" font-size="7">0.5%</text>
-          <text x="2" y="88" fill="rgba(255,255,255,0.15)" font-size="7">0.1%</text>
-          <path d="M0,105 Q20,104 40,106 T80,104 T120,105 T160,103 T200,100 T220,40 T240,95 T280,104 T320,106 T360,105 T400,104 L400,120 L0,120Z" fill="url(#errGrad)"/>
-          <path d="M0,105 Q20,104 40,106 T80,104 T120,105 T160,103 T200,100 T220,40 T240,95 T280,104 T320,106 T360,105 T400,104" stroke="#34d399" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <circle cx="220" cy="40" r="3" fill="#f87171"/>
-          <text x="225" y="38" fill="#f87171" font-size="7" font-weight="600">Spike — auto-recovered</text>
-          <circle cx="400" cy="104" r="3" fill="#34d399"/>
-        </svg>
-      </div>
-      <div class="dash-chart">
-        <div class="dash-chart-title">CPU Utilization (%) — 24h</div>
-        <svg viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="cpuGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa" stop-opacity="0.25"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient></defs>
-          <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <line x1="0" y1="60" x2="400" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <line x1="0" y1="90" x2="400" y2="90" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <text x="2" y="28" fill="rgba(255,255,255,0.15)" font-size="7">80%</text>
-          <text x="2" y="58" fill="rgba(255,255,255,0.15)" font-size="7">50%</text>
-          <text x="2" y="88" fill="rgba(255,255,255,0.15)" font-size="7">20%</text>
-          <path d="M0,65 Q20,62 40,68 T80,55 T120,60 T160,50 T200,52 T240,48 T280,55 T320,45 T360,50 T400,47 L400,120 L0,120Z" fill="url(#cpuGrad)"/>
-          <path d="M0,65 Q20,62 40,68 T80,55 T120,60 T160,50 T200,52 T240,48 T280,55 T320,45 T360,50 T400,47" stroke="#a78bfa" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <circle cx="400" cy="47" r="3" fill="#a78bfa"/>
-        </svg>
-      </div>
-      <div class="dash-chart">
-        <div class="dash-chart-title">Throughput (req/s) — 24h</div>
-        <svg viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="rpsGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22d3ee" stop-opacity="0.25"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></linearGradient></defs>
-          <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <line x1="0" y1="60" x2="400" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <line x1="0" y1="90" x2="400" y2="90" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-          <text x="2" y="28" fill="rgba(255,255,255,0.15)" font-size="7">2K</text>
-          <text x="2" y="58" fill="rgba(255,255,255,0.15)" font-size="7">1K</text>
-          <text x="2" y="88" fill="rgba(255,255,255,0.15)" font-size="7">500</text>
-          <path d="M0,80 Q20,78 40,75 T80,70 T120,65 T160,55 T200,50 T240,45 T280,42 T320,38 T360,35 T400,32 L400,120 L0,120Z" fill="url(#rpsGrad)"/>
-          <path d="M0,80 Q20,78 40,75 T80,70 T120,65 T160,55 T200,50 T240,45 T280,42 T320,38 T360,35 T400,32" stroke="#22d3ee" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <circle cx="400" cy="32" r="3" fill="#22d3ee"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ ADRs ══════════ -->
-<section id="adrs" class="alt-bg">
-  <div class="tag reveal" style="color:var(--purple)">Decision Making</div>
-  <h2 class="reveal">Architecture Decision Records</h2>
-  <p class="sub reveal">How I evaluate trade-offs and make infrastructure decisions — documented for transparency.</p>
-
-  <div class="adr-list reveal">
-    <div class="adr-card">
-      <div class="adr-header" onclick="this.parentElement.classList.toggle('open')">
-        <h3>ADR-001: Use ECS Fargate over EKS for Microservices</h3>
-        <div class="adr-meta">
-          <span class="adr-badge" style="background:rgba(52,211,153,0.1);color:var(--green)">Accepted</span>
-          <span class="adr-date">2025-09-15</span>
-        </div>
-        <svg class="adr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="adr-body">
-        <div class="adr-content">
-          <h4>Context</h4><p>Team of 4 engineers needs to deploy 8 containerized microservices. Must choose between ECS Fargate and EKS.</p>
-          <h4>Options Considered</h4>
-          <ul><li class="chosen">ECS Fargate — serverless, no cluster management, pay-per-task</li><li>EKS — full Kubernetes, powerful but requires dedicated ops expertise</li><li>ECS on EC2 — cheaper compute but requires capacity planning</li></ul>
-          <h4>Decision</h4><p>ECS Fargate. For a small team, the operational overhead of EKS outweighs its flexibility.</p>
-          <h4>Consequences</h4>
-          <ul><li>No cluster management — team focuses on application code</li><li>~20% higher per-task cost vs EC2, offset by reduced ops hours</li></ul>
-        </div>
-      </div>
-    </div>
-    <div class="adr-card">
-      <div class="adr-header" onclick="this.parentElement.classList.toggle('open')">
-        <h3>ADR-002: Adopt Terraform over CloudFormation for IaC</h3>
-        <div class="adr-meta">
-          <span class="adr-badge" style="background:rgba(52,211,153,0.1);color:var(--green)">Accepted</span>
-          <span class="adr-date">2025-08-20</span>
-        </div>
-        <svg class="adr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="adr-body">
-        <div class="adr-content">
-          <h4>Context</h4><p>Infrastructure spans AWS, Cloudflare DNS, and GitHub Actions. Need a consistent IaC tool for multi-provider resources.</p>
-          <h4>Options Considered</h4>
-          <ul><li class="chosen">Terraform — multi-provider, large ecosystem, state management</li><li>CloudFormation — AWS-native, no state file, but AWS-only</li><li>Pulumi — code-first IaC, smaller community</li></ul>
-          <h4>Decision</h4><p>Terraform with S3 + DynamoDB backend. Multi-provider support means one tool for all infrastructure.</p>
-          <h4>Consequences</h4>
-          <ul><li>State file requires careful management</li><li>Unified workflow for all infrastructure</li></ul>
-        </div>
-      </div>
-    </div>
-    <div class="adr-card">
-      <div class="adr-header" onclick="this.parentElement.classList.toggle('open')">
-        <h3>ADR-003: Blue-Green over Canary Deployments</h3>
-        <div class="adr-meta">
-          <span class="adr-badge" style="background:rgba(52,211,153,0.1);color:var(--green)">Accepted</span>
-          <span class="adr-date">2025-10-05</span>
-        </div>
-        <svg class="adr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="adr-body">
-        <div class="adr-content">
-          <h4>Context</h4><p>Production deployments occasionally cause regressions. Need zero-downtime strategy with instant rollback on ECS Fargate behind ALB.</p>
-          <h4>Decision</h4><p>Blue-Green via CodeDeploy + ALB. Rollback is a single target-group switch under 30s.</p>
-          <h4>Consequences</h4>
-          <ul><li>Double task count during deployments (brief cost increase)</li><li>Instant rollback — critical for customer-facing services</li></ul>
-        </div>
-      </div>
-    </div>
-    <div class="adr-card">
-      <div class="adr-header" onclick="this.parentElement.classList.toggle('open')">
-        <h3>ADR-004: ServiceNow for CS Platform over Custom Build</h3>
-        <div class="adr-meta">
-          <span class="adr-badge" style="background:rgba(52,211,153,0.1);color:var(--green)">Accepted</span>
-          <span class="adr-date">2022-03-10</span>
-        </div>
-        <svg class="adr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="adr-body">
-        <div class="adr-content">
-          <h4>Context</h4><p>Customer service operations handling 800+ monthly tickets across 5 European markets needed a scalable platform with AI automation capability.</p>
-          <h4>Options Considered</h4>
-          <ul><li class="chosen">ServiceNow — enterprise CS platform with native AI chatbot integration</li><li>Custom build — full control but high engineering cost and time to market</li><li>Zendesk — simpler but limited API extensibility for automotive domain</li></ul>
-          <h4>Decision</h4><p>ServiceNow. Enterprise-grade integration capabilities enabled rapid AI chatbot deployment and multilingual automation on top of existing workflows.</p>
-          <h4>Consequences</h4>
-          <ul><li>800 → 300 monthly tickets (62% reduction)</li><li>AI chatbot serving 20,000 users/month in 5 languages</li><li>Higher licensing cost offset by ops hours saved</li></ul>
-        </div>
       </div>
     </div>
   </div>
@@ -941,10 +674,56 @@ rect[data-node]:hover{filter:brightness(1.2)}
   </div>
 </section>
 
+<!-- ══════════ TUTORIALS ══════════ -->
+<section id="tutorials" class="alt-bg">
+  <div class="tag reveal" style="color:var(--aws)">Technical Tutorials</div>
+  <h2 class="reveal">Infrastructure Guides</h2>
+  <p class="sub reveal">Step-by-step setup guides for every architecture pattern on this site — written for engineers who want to build it themselves.</p>
+
+  <div class="case-studies reveal">
+    <div class="case-card">
+      <span class="case-label" style="background:rgba(255,153,0,0.1);color:var(--aws)">AWS</span>
+      <h3>AWS 3-Tier Architecture</h3>
+      <p class="case-desc">Full setup guide — CloudFront, ALB, EC2 across availability zones, RDS Multi-AZ, ElastiCache, S3, and CloudWatch monitoring.</p>
+      <a href="tutorials/aws-3tier.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--aws);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+    <div class="case-card">
+      <span class="case-label" style="background:rgba(129,140,248,0.1);color:var(--indigo)">Network</span>
+      <h3>Cisco Enterprise Network</h3>
+      <p class="case-desc">Three-tier campus design with redundant ASA firewalls, Cat 9500 core switching, distribution layer, and VLAN segmentation.</p>
+      <a href="tutorials/cisco-network.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--indigo);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+    <div class="case-card">
+      <span class="case-label" style="background:rgba(52,211,153,0.1);color:var(--green)">Data</span>
+      <h3>ETL Pipeline Architecture</h3>
+      <p class="case-desc">REST API, database, and file ingestion through AWS Glue PySpark transforms, S3 staging, and Redshift loading with full error handling.</p>
+      <a href="tutorials/etl-pipeline.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--green);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+    <div class="case-card">
+      <span class="case-label" style="background:rgba(34,211,238,0.1);color:var(--cyan)">Batch</span>
+      <h3>Scheduled Batch Pipeline</h3>
+      <p class="case-desc">EventBridge cron triggers Step Functions — Lambda validates, AWS Batch runs parallel Fargate jobs, results to S3, SNS alerts on completion.</p>
+      <a href="tutorials/batch-pipeline.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--cyan);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+    <div class="case-card">
+      <span class="case-label" style="background:rgba(34,211,238,0.1);color:var(--cyan)">Microservices</span>
+      <h3>Java Microservices to Kubernetes</h3>
+      <p class="case-desc">Jenkins builds Spring Boot services with Maven, runs tests, builds Docker images, pushes to Harbor, deploys to Kubernetes with rolling updates.</p>
+      <a href="tutorials/microservices-k8s.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--cyan);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+    <div class="case-card">
+      <span class="case-label" style="background:rgba(251,146,60,0.1);color:var(--orange)">Monolith</span>
+      <h3>Java Monolith to EC2/Tomcat</h3>
+      <p class="case-desc">Jenkins builds WAR with Maven, uploads to S3, Ansible rolling deploy to EC2 Tomcat instances behind ALB with health checks.</p>
+      <a href="tutorials/monolith-ec2.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--orange);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════ CONTACT ══════════ -->
 <section id="contact">
   <div class="tag reveal" style="color:var(--cyan)">Get in touch</div>
-  <h2 class="reveal">Let's build something.</h2>
+  <h2 class="reveal">Let's talk.</h2>
   <p class="sub reveal">Senior TPM available for US remote or hybrid roles. Green Card holder, no sponsorship required.</p>
   <div class="contact-links reveal">
     <a href="https://github.com/stefanlaza" target="_blank">
@@ -958,6 +737,14 @@ rect[data-node]:hover{filter:brightness(1.2)}
     <a href="https://www.linkedin.com/in/stefanlazarevic/" target="_blank">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       LinkedIn
+    </a>
+    <a href="Stefan_Lazarevic_CV.pdf" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      Download CV
+    </a>
+    <a href="https://stefanlaza.github.io/CV/" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      Portfolio
     </a>
   </div>
 </section>
