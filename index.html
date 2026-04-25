@@ -3,232 +3,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stefan Lazarevic — Technical Product Manager</title>
+<title>Stefan Lazarevic — Technical Delivery Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#050507;--surface:#0a0a10;--card:#111118;
-  --border:rgba(255,255,255,0.06);--text:#f0f0f5;--muted:#6e6e80;
-  --aws:#ff9900;--blue:#4a9eff;--purple:#a78bfa;--green:#34d399;
-  --orange:#fb923c;--red:#f87171;--cyan:#22d3ee;--indigo:#818cf8;
+  --bg:#07090d;--surface:#0d1018;--card:#111520;
+  --border:rgba(255,255,255,0.07);--text:#e8eaf0;--muted:#6b7280;
+  --accent:#c8a96e;--accent2:#e8c98e;--dark:#020408;
+  --green:#34d399;--blue:#4a9eff;--red:#f87171;--purple:#a78bfa;--cyan:#22d3ee;--aws:#ff9900;
 }
 html{scroll-behavior:smooth}
-body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.4}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:rgba(5,5,7,0.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-name{font-weight:600;font-size:0.9rem;letter-spacing:-0.01em}
-.nav-links{display:flex;gap:1.5rem}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;transition:color 0.2s}
-.nav-links a:hover{color:var(--text)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 3rem;background:rgba(7,9,13,0.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--accent)}
+.nav-links{display:flex;gap:2rem;flex-wrap:wrap}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;transition:color 0.3s}
+.nav-links a:hover{color:var(--accent)}
 
-/* SECTIONS */
-section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7rem 2rem 5rem;position:relative}
-.alt-bg{background:var(--surface)}
-.tag{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;padding:0.35rem 0.9rem;border-radius:100px;border:1px solid var(--border);margin-bottom:1.5rem}
-h1{font-size:clamp(2.5rem,7vw,5rem);font-weight:700;letter-spacing:-0.04em;text-align:center;line-height:1.05;background:linear-gradient(135deg,#fff 0%,#888 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-h2{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-0.03em;text-align:center;line-height:1.1;margin-bottom:0.5rem}
-.sub{font-size:clamp(0.9rem,1.6vw,1.1rem);color:var(--muted);text-align:center;max-width:560px;margin-top:1rem}
+.scroll-line{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;z-index:200;transition:width 0.1s linear}
 
 /* REVEAL */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* DIAGRAM SHARED */
-.diagram{width:min(94vw,960px);margin:2.5rem auto 0;border-radius:20px;background:var(--card);border:1px solid var(--border);overflow:hidden;position:relative}
-.diagram svg{width:100%;height:auto;display:block}
-.diagram-title{position:absolute;top:16px;left:20px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);z-index:2}
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8rem 3rem 5rem;position:relative;overflow:hidden}
+#particles-hero{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.hero>*:not(#particles-hero){position:relative;z-index:1}
+.particle{position:absolute;border-radius:50%;opacity:0;animation:float-up 14s infinite;pointer-events:none}
+@keyframes float-up{0%{transform:translateY(0) translateX(0);opacity:0}3%{opacity:0.7}50%{transform:translateY(-450px) translateX(20px);opacity:0.5}95%{opacity:0.2}100%{transform:translateY(-900px) translateX(-15px);opacity:0}}
+.hero-eyebrow{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;display:flex;align-items:center;gap:1rem;animation:fadeInUp 0.8s ease forwards}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--accent);opacity:0.4}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,8vw,6.5rem);font-weight:600;text-align:center;line-height:0.95;letter-spacing:-0.02em;margin-bottom:2rem;animation:fadeInUp 0.8s ease 0.15s forwards;opacity:0}
+.hero h1 .line1{display:block;color:var(--text)}
+.hero h1 .line2{display:block;color:var(--accent);font-style:italic}
+.hero h1 .line3{display:block;font-size:0.45em;letter-spacing:0.12em;font-style:normal;font-weight:400;margin-top:0.4em;color:var(--muted)}
+.hero-sub{font-size:0.82rem;color:var(--muted);text-align:center;max-width:580px;line-height:1.9;margin-bottom:2.5rem;animation:fadeInUp 0.8s ease 0.3s forwards;opacity:0}
+.hero-cta{display:flex;gap:1rem;animation:fadeInUp 0.8s ease 0.45s forwards;opacity:0}
+.btn-gold{padding:0.85rem 2.5rem;background:var(--accent);color:var(--dark);border:none;font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.3s}
+.btn-gold:hover{background:var(--accent2);transform:translateY(-2px)}
+.btn-ghost{padding:0.85rem 2.5rem;background:transparent;color:var(--accent);border:1px solid rgba(200,169,110,0.4);font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.3s}
+.btn-ghost:hover{border-color:var(--accent);background:rgba(200,169,110,0.08);transform:translateY(-2px)}
 
-/* Shared glow filter */
-.glow-filter feGaussianBlur{stdDeviation:4}
+/* SECTIONS */
+.section-wrap{padding:7rem 3rem;max-width:1100px;margin:0 auto}
+.alt-wrap{background:var(--surface)}
+.alt-inner{max-width:1100px;margin:0 auto;padding:7rem 3rem}
+.section-eyebrow{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem}
+.section-eyebrow::before{content:'';width:20px;height:1px;background:var(--accent);opacity:0.5}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:600;color:var(--text);letter-spacing:-0.02em;line-height:1.0}
+.section-title em{font-style:italic;color:var(--accent)}
 
-/* SERVICES GRID */
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;max-width:960px;width:100%;background:var(--border);border-radius:20px;overflow:hidden;margin-top:2.5rem}
-.svc{background:var(--card);padding:2rem;transition:background 0.3s}
-.svc:hover{background:#16161e}
-.svc-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
-.svc-icon svg{width:22px;height:22px;stroke-width:1.8}
-.svc h3{font-size:0.95rem;font-weight:600;margin-bottom:0.4rem}
-.svc p{font-size:0.78rem;color:var(--muted);line-height:1.5}
-.svc-tag{display:inline-block;font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;padding:0.2rem 0.5rem;border-radius:4px;margin-top:0.8rem}
-
-/* CONTACT */
-.contact-links{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;justify-content:center}
-.contact-links a{display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.5rem;border-radius:100px;font-size:0.85rem;font-weight:500;text-decoration:none;color:var(--text);border:1px solid var(--border);transition:border-color 0.2s,background 0.2s}
-.contact-links a:hover{border-color:rgba(255,255,255,0.2);background:var(--card)}
-.contact-links a svg{width:18px;height:18px}
-.tut-link{display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.5rem;padding:0.6rem 1.4rem;border-radius:100px;font-size:0.8rem;font-weight:500;text-decoration:none;color:var(--text);border:1px solid var(--border);transition:border-color 0.2s,background 0.2s,transform 0.2s}
-.tut-link:hover{border-color:rgba(255,255,255,0.2);background:var(--card);transform:translateY(-2px)}
-.tut-link svg{width:16px;height:16px;opacity:0.6}
-footer{text-align:center;padding:3rem 2rem;font-size:0.7rem;color:var(--muted);border-top:1px solid var(--border)}
-
-/* CLICK-TO-HIGHLIGHT */
-.diagram svg[data-active] rect[data-node],.diagram svg[data-active] path,.diagram svg[data-active] circle[data-path-nodes],.diagram svg[data-active] line{opacity:0.08;transition:opacity 0.4s ease}
-.diagram svg[data-active] rect[data-node].hl,.diagram svg[data-active] path.hl,.diagram svg[data-active] circle[data-path-nodes].hl,.diagram svg[data-active] line.hl{opacity:1;transition:opacity 0.4s ease}
-.diagram svg[data-active] text{opacity:0.15;transition:opacity 0.4s ease}
-.diagram svg[data-active] text.hl{opacity:1;transition:opacity 0.4s ease}
-rect[data-node]{cursor:pointer}
-rect[data-node]:hover{filter:brightness(1.2)}
-.diagram .hint{position:absolute;bottom:12px;right:16px;font-size:0.6rem;color:var(--muted);opacity:0.5;pointer-events:none;transition:opacity 0.3s}
-.diagram.active .hint{opacity:0}
+/* AI CARDS */
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1px;background:var(--border);margin-top:3rem}
+.ai-card{background:var(--card);padding:2.5rem;position:relative;overflow:hidden;transition:background 0.3s}
+.ai-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);transform:scaleX(0);transition:transform 0.4s;transform-origin:left}
+.ai-card:hover{background:#161c28}
+.ai-card:hover::before{transform:scaleX(1)}
+.ai-badge{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.7rem;border:1px solid var(--border);color:var(--muted);margin-bottom:1.2rem;display:inline-block}
+.ai-card h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--text);margin-bottom:0.8rem}
+.ai-card p{font-size:0.8rem;color:var(--muted);line-height:1.9;margin-bottom:1.5rem}
+.ai-metrics{display:flex;gap:1.5rem;flex-wrap:wrap;padding-top:1.2rem;border-top:1px solid var(--border)}
+.ai-metric-val{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--accent);line-height:1;display:block}
+.ai-metric-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-top:0.2rem;display:block}
+.ai-stack{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem}
+.ai-stack span{font-size:0.62rem;padding:0.2rem 0.6rem;border:1px solid var(--border);color:var(--muted)}
 
 /* CASE STUDIES */
-.case-studies{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:960px;width:100%;margin-top:2.5rem}
-.case-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:transform 0.3s,border-color 0.3s}
-.case-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.12)}
-.case-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:1rem;display:inline-block;padding:0.25rem 0.7rem;border-radius:6px}
-.case-card h3{font-size:1.05rem;font-weight:600;margin-bottom:0.6rem}
-.case-card .case-desc{font-size:0.8rem;color:var(--muted);line-height:1.6;margin-bottom:1.2rem}
-.metrics-row{display:flex;gap:1.2rem;flex-wrap:wrap}
-.metric{text-align:center;flex:1;min-width:70px}
-.metric-val{font-size:1.6rem;font-weight:700;letter-spacing:-0.03em;line-height:1.2}
-.metric-label{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:0.15rem}
-.case-before-after{display:flex;align-items:center;gap:0.5rem;margin-top:1rem;font-size:0.72rem;color:var(--muted)}
-.case-before-after .arrow{color:var(--green);font-size:1rem}
+.case-grid{display:flex;flex-direction:column;gap:1px;background:var(--border);margin-top:3rem}
+.case-card{background:var(--card);padding:2.5rem;transition:background 0.3s;display:grid;grid-template-columns:240px 1fr;gap:3rem}
+.case-card:hover{background:#161c28}
+.case-left{padding-top:0.2rem}
+.case-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;display:block}
+.case-val{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;color:var(--accent);line-height:1;margin-bottom:0.3rem;display:block}
+.case-company{font-size:0.75rem;color:var(--muted)}
+.case-right h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--text);margin-bottom:0.8rem}
+.case-right p{font-size:0.8rem;color:var(--muted);line-height:1.9;margin-bottom:1.2rem}
+.case-wins{list-style:none;padding:0;border-top:1px solid var(--border);padding-top:1rem}
+.case-wins li{font-size:0.78rem;color:var(--muted);padding:0.4rem 0 0.4rem 1.2rem;position:relative;border-bottom:1px solid rgba(255,255,255,0.03)}
+.case-wins li:last-child{border-bottom:none}
+.case-wins li::before{content:'›';position:absolute;left:0;color:var(--accent)}
 
-/* MONITORING DASHBOARD */
-.dashboard{width:min(94vw,960px);margin:2.5rem auto 0;border-radius:20px;background:var(--card);border:1px solid var(--border);overflow:hidden;padding:1.5rem}
-.dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.5rem}
-.dash-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
-.dash-status{display:flex;align-items:center;gap:0.5rem;font-size:0.72rem;font-weight:600;color:var(--green)}
-.dash-status .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse-dot 2s infinite}
-@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.4}}
-.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
-@media(max-width:700px){.dash-grid{grid-template-columns:repeat(2,1fr)}}
-.dash-stat{background:var(--surface);border-radius:12px;padding:1rem;text-align:center}
-.dash-stat-val{font-size:1.5rem;font-weight:700;letter-spacing:-0.03em}
-.dash-stat-label{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:0.2rem}
-.dash-charts{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-@media(max-width:700px){.dash-charts{grid-template-columns:1fr}}
-.dash-chart{background:var(--surface);border-radius:12px;padding:1rem;position:relative}
-.dash-chart-title{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.8rem}
-.dash-chart svg{width:100%;height:auto;display:block}
+/* DIAGRAM STYLES */
+.diagram-wrap{width:100%;margin:2.5rem 0;border:1px solid var(--border);background:var(--card);overflow:hidden;position:relative}
+.diagram-wrap svg{width:100%;height:auto;display:block}
+.diagram-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);padding:0.8rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem}
+.diagram-label::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%}
 
-/* ADR SECTION */
-.adr-list{max-width:960px;width:100%;margin-top:2.5rem;display:flex;flex-direction:column;gap:1rem}
-.adr-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color 0.3s}
-.adr-card:hover{border-color:rgba(255,255,255,0.12)}
+/* ADR CARDS */
+.adr-list{display:flex;flex-direction:column;gap:1px;background:var(--border);margin-top:3rem}
+.adr-card{background:var(--card);overflow:hidden;transition:background 0.3s}
+.adr-card:hover{background:#161c28}
 .adr-header{padding:1.5rem 2rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.adr-header h3{font-size:0.95rem;font-weight:600;flex:1}
+.adr-header h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text);flex:1}
 .adr-meta{display:flex;gap:0.8rem;align-items:center;flex-shrink:0}
-.adr-date{font-size:0.65rem;color:var(--muted)}
-.adr-badge{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.2rem 0.6rem;border-radius:6px}
-.adr-chevron{width:20px;height:20px;color:var(--muted);transition:transform 0.3s;flex-shrink:0}
+.adr-status{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.7rem;border:1px solid}
+.adr-status.accepted{border-color:rgba(52,211,153,0.3);color:var(--green)}
+.adr-status.superseded{border-color:rgba(74,158,255,0.3);color:var(--blue)}
+.adr-date{font-size:0.62rem;color:var(--muted)}
+.adr-chevron{width:16px;height:16px;color:var(--muted);transition:transform 0.3s;flex-shrink:0}
 .adr-card.open .adr-chevron{transform:rotate(180deg)}
 .adr-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
 .adr-card.open .adr-body{max-height:600px}
 .adr-content{padding:0 2rem 1.5rem;border-top:1px solid var(--border);padding-top:1.2rem}
-.adr-content h4{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.4rem;margin-top:1rem}
+.adr-content h4{font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:0.4rem;margin-top:0.8rem}
 .adr-content h4:first-child{margin-top:0}
-.adr-content p,.adr-content ul{font-size:0.82rem;color:var(--muted);line-height:1.7}
+.adr-content p,.adr-content ul{font-size:0.8rem;color:var(--muted);line-height:1.8}
 .adr-content ul{padding-left:1.2rem;margin-top:0.3rem}
 .adr-content li{margin-bottom:0.2rem}
-.adr-content .chosen{color:var(--green);font-weight:600}
+.adr-content .chosen{color:var(--green);font-weight:500}
 
-/* PROJECT TIMELINE / GANTT */
-.gantt-wrap{width:min(94vw,960px);margin:2.5rem auto 0;border-radius:20px;background:var(--card);border:1px solid var(--border);overflow:hidden;padding:1.5rem}
-.gantt-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.gantt-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
-.gantt-legend{display:flex;gap:1rem;flex-wrap:wrap}
-.gantt-legend span{display:flex;align-items:center;gap:0.4rem;font-size:0.62rem;color:var(--muted)}
-.gantt-legend .leg-dot{width:8px;height:8px;border-radius:3px}
-.gantt-months{display:grid;grid-template-columns:160px repeat(12,1fr);font-size:0.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;padding:0 0 0.5rem;border-bottom:1px solid var(--border);margin-bottom:0.5rem}
-.gantt-months span:first-child{font-weight:700}
-.gantt-row{display:grid;grid-template-columns:160px 1fr;align-items:center;padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.02)}
-.gantt-row:hover{background:rgba(255,255,255,0.02)}
-.gantt-task{font-size:0.75rem;font-weight:500;display:flex;align-items:center;gap:0.5rem}
-.gantt-task .task-icon{width:6px;height:6px;border-radius:2px;flex-shrink:0}
-.gantt-bar-area{position:relative;height:22px}
-.gantt-bar{position:absolute;height:18px;border-radius:6px;top:2px;opacity:0.85;transition:opacity 0.2s}
+/* GANTT */
+.gantt-wrap{background:var(--card);border:1px solid var(--border);padding:2rem;margin-top:3rem}
+.gantt-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.gantt-title{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
+.gantt-legend{display:flex;gap:1.2rem;flex-wrap:wrap}
+.gantt-legend span{display:flex;align-items:center;gap:0.4rem;font-size:0.6rem;color:var(--muted)}
+.gantt-legend .leg-dot{width:8px;height:8px;border-radius:2px}
+.gantt-months{display:grid;grid-template-columns:150px repeat(12,1fr);font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;padding:0 0 0.5rem;border-bottom:1px solid var(--border);margin-bottom:0.5rem}
+.gantt-row{display:grid;grid-template-columns:150px 1fr;align-items:center;padding:0.35rem 0;border-bottom:1px solid rgba(255,255,255,0.02)}
+.gantt-row:hover{background:rgba(200,169,110,0.02)}
+.gantt-task{font-size:0.7rem;font-weight:400;display:flex;align-items:center;gap:0.5rem;color:var(--muted)}
+.gantt-task .task-dot{width:5px;height:5px;border-radius:1px;flex-shrink:0}
+.gantt-bar-area{position:relative;height:20px}
+.gantt-bar{position:absolute;height:16px;border-radius:2px;top:2px;opacity:0.8;transition:opacity 0.2s}
 .gantt-bar:hover{opacity:1}
-.gantt-milestone{position:absolute;width:12px;height:12px;transform:rotate(45deg);top:5px;border:2px solid}
-.gantt-phase{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);padding:0.6rem 0 0.2rem;grid-column:1/-1}
+.gantt-milestone{position:absolute;width:10px;height:10px;transform:rotate(45deg);top:5px;border:2px solid}
+.gantt-phase{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);padding:0.5rem 0 0.2rem;grid-column:1/-1;opacity:0.7}
 
 /* RISK REGISTER */
-.risk-wrap{width:min(94vw,960px);margin:2.5rem auto 0;border-radius:20px;background:var(--card);border:1px solid var(--border);overflow:hidden}
-.risk-matrix{display:grid;grid-template-columns:60px repeat(5,1fr);grid-template-rows:auto repeat(5,50px);gap:1px;background:var(--border);margin:1.5rem;border-radius:12px;overflow:hidden}
-.risk-matrix .axis-label{background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
-.risk-cell{background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:600;cursor:default;transition:transform 0.2s;position:relative}
+.risk-wrap{background:var(--card);border:1px solid var(--border);overflow:hidden;margin-top:3rem}
+.risk-matrix{display:grid;grid-template-columns:55px repeat(5,1fr);grid-template-rows:auto repeat(5,44px);gap:1px;background:var(--border);margin:1.5rem;border-radius:4px;overflow:hidden}
+.risk-matrix .axis-label{background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+.risk-cell{background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.62rem;font-weight:600;cursor:default;transition:transform 0.2s}
 .risk-cell:hover{z-index:2;transform:scale(1.05)}
-.risk-cell.low{background:rgba(52,211,153,0.08);color:var(--green)}
-.risk-cell.med{background:rgba(251,146,60,0.08);color:var(--orange)}
-.risk-cell.high{background:rgba(248,113,113,0.08);color:var(--red)}
-.risk-cell.crit{background:rgba(248,113,113,0.15);color:var(--red)}
+.risk-cell.low{background:rgba(52,211,153,0.07);color:var(--green)}
+.risk-cell.med{background:rgba(251,146,60,0.07);color:#fb923c}
+.risk-cell.high{background:rgba(248,113,113,0.07);color:var(--red)}
+.risk-cell.crit{background:rgba(248,113,113,0.14);color:var(--red)}
 .risk-table{width:100%;border-collapse:collapse}
-.risk-table th{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);padding:0.8rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
-.risk-table td{font-size:0.78rem;padding:0.7rem 1rem;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--muted)}
-.risk-table tr:hover td{background:rgba(255,255,255,0.02)}
-.risk-badge{display:inline-block;font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.15rem 0.5rem;border-radius:4px}
+.risk-table th{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);padding:0.8rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+.risk-table td{font-size:0.75rem;padding:0.7rem 1rem;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+.risk-table tr:hover td{background:rgba(200,169,110,0.02)}
+.risk-badge{display:inline-block;font-size:0.55rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;padding:0.15rem 0.5rem;border:1px solid}
 
 /* DELIVERY METRICS */
-.del-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;max-width:960px;width:100%;margin-top:2.5rem}
-.del-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;transition:transform 0.3s,border-color 0.3s}
-.del-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.12)}
-.del-card .del-val{font-size:2.2rem;font-weight:700;letter-spacing:-0.03em;line-height:1.2}
-.del-card .del-label{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:0.3rem}
-.del-card .del-trend{font-size:0.7rem;margin-top:0.6rem;font-weight:600}
-.del-sparkline{margin-top:0.8rem}
-.del-sparkline svg{width:100%;height:auto}
+.del-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border);margin-top:3rem}
+.del-card{background:var(--card);padding:1.8rem;text-align:center;transition:background 0.3s;position:relative;overflow:hidden}
+.del-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent)}
+.del-card:hover{background:#161c28}
+.del-val{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:700;color:var(--accent);line-height:1.1}
+.del-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:0.3rem}
+.del-trend{font-size:0.65rem;margin-top:0.5rem;font-weight:500}
 
-/* TEAM TOPOLOGY */
-.topo-wrap{width:min(94vw,960px);margin:2.5rem auto 0;border-radius:20px;background:var(--card);border:1px solid var(--border);overflow:hidden;padding:1.5rem}
-.topo-wrap svg{width:100%;height:auto;display:block}
-
-/* RETRO INSIGHTS */
-.retro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:960px;width:100%;margin-top:2.5rem}
-.retro-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:transform 0.3s,border-color 0.3s}
-.retro-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.12)}
-.retro-card .retro-sprint{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem}
-.retro-card h3{font-size:0.95rem;font-weight:600;margin-bottom:0.5rem}
+/* RETRO */
+.retro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);margin-top:3rem}
+.retro-card{background:var(--card);padding:2rem;transition:background 0.3s}
+.retro-card:hover{background:#161c28}
+.retro-sprint{font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem;color:var(--accent)}
+.retro-card h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:0.8rem}
 .retro-items{list-style:none;padding:0}
-.retro-items li{font-size:0.78rem;color:var(--muted);line-height:1.6;padding:0.3rem 0;padding-left:1.2rem;position:relative}
-.retro-items li::before{content:'';position:absolute;left:0;top:0.65rem;width:6px;height:6px;border-radius:50%}
+.retro-items li{font-size:0.75rem;color:var(--muted);line-height:1.7;padding:0.3rem 0 0.3rem 1.2rem;position:relative}
+.retro-items li::before{content:'';position:absolute;left:0;top:0.65rem;width:5px;height:5px;border-radius:50%}
 .retro-items.went-well li::before{background:var(--green)}
-.retro-items.improve li::before{background:var(--orange)}
+.retro-items.improve li::before{background:#fb923c}
 .retro-items.actions li::before{background:var(--blue)}
-.retro-type{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;margin-top:0.8rem}
+.retro-type{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.4rem;margin-top:0.8rem;color:var(--muted)}
 .retro-type:first-of-type{margin-top:0}
 
-/* ESCALATION FRAMEWORK */
-.esc-wrap{width:min(94vw,960px);margin:2.5rem auto 0;border-radius:20px;background:var(--card);border:1px solid var(--border);overflow:hidden;padding:1.5rem}
+/* TUTORIALS */
+.tut-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);margin-top:3rem}
+.tut-card{background:var(--card);padding:2rem;transition:background 0.3s;position:relative;overflow:hidden}
+.tut-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);transform:scaleX(0);transition:transform 0.4s;transform-origin:left}
+.tut-card:hover{background:#161c28}
+.tut-card:hover::before{transform:scaleX(1)}
+.tut-badge{font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.7rem;border:1px solid var(--border);color:var(--muted);margin-bottom:1rem;display:inline-block}
+.tut-card h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:0.6rem}
+.tut-card p{font-size:0.75rem;color:var(--muted);line-height:1.8;margin-bottom:1rem}
+.tut-link{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:gap 0.2s}
+.tut-link:hover{gap:0.8rem}
+
+/* ESCALATION */
+.esc-wrap{background:var(--card);border:1px solid var(--border);padding:2rem;margin-top:3rem}
 .esc-wrap svg{width:100%;height:auto;display:block}
 
-/* AI SECTION */
-.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:960px;width:100%;margin-top:2.5rem}
-.ai-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:transform 0.3s,border-color 0.3s}
-.ai-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.12)}
-.ai-card-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:1rem;display:inline-block;padding:0.25rem 0.7rem;border-radius:6px}
-.ai-card h3{font-size:1.05rem;font-weight:600;margin-bottom:0.6rem}
-.ai-card p{font-size:0.8rem;color:var(--muted);line-height:1.6;margin-bottom:1.2rem}
-.ai-metrics{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1rem}
-.ai-metric{text-align:center;flex:1;min-width:80px}
-.ai-metric-val{font-size:1.5rem;font-weight:700;letter-spacing:-0.03em;line-height:1.2}
-.ai-metric-label{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:0.15rem}
-.ai-stack{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
-.ai-stack span{font-size:0.65rem;font-weight:600;padding:0.2rem 0.6rem;border-radius:6px;background:rgba(255,255,255,0.05);color:var(--muted)}
+/* TEAM TOPOLOGY */
+.topo-wrap{background:var(--card);border:1px solid var(--border);padding:2rem;margin-top:3rem}
+.topo-wrap svg{width:100%;height:auto;display:block}
 
-/* RESPONSIVE */
-@media(max-width:700px){
-  nav{padding:0.8rem 1rem}.nav-links{gap:0.8rem}.nav-links a{font-size:0.7rem}
-  section{padding:5rem 1rem 3rem}
-  .services{grid-template-columns:1fr}
-  .diagram{border-radius:12px}
+/* CONTACT */
+.contact-wrap{text-align:center;padding:7rem 3rem;position:relative;overflow:hidden;max-width:700px;margin:0 auto}
+.contact-wrap::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(200,169,110,0.04) 0%,transparent 70%);pointer-events:none}
+.contact-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem}
+.contact-link{display:inline-flex;align-items:center;gap:0.6rem;padding:0.85rem 1.8rem;border:1px solid var(--border);color:var(--text);text-decoration:none;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.3s}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.contact-link svg{width:14px;height:14px}
+
+footer{text-align:center;padding:2rem;font-size:0.62rem;color:var(--muted);border-top:1px solid var(--border);letter-spacing:0.08em}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}.nav-links{gap:1rem}
+  .hero{padding:6rem 1.5rem 4rem}
+  .section-wrap{padding:4rem 1.5rem}.alt-inner{padding:4rem 1.5rem}
+  .case-card{grid-template-columns:1fr;gap:1rem}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}}
 </style>
 </head>
 <body>
 
+<div class="scroll-line" id="scrollLine"></div>
+
 <nav>
-  <span class="nav-name">Stefan Lazarevic</span>
+  <span class="nav-logo">SL</span>
   <div class="nav-links">
-    <a href="#ai-work">AI</a>
-    <a href="#services">Services</a>
-    <a href="#case-studies">Impact</a>
+    <a href="#ai">AI</a>
+    <a href="#impact">Impact</a>
+    <a href="#aws">AWS</a>
     <a href="#timeline">Timeline</a>
     <a href="#risks">Risks</a>
     <a href="#delivery">Delivery</a>
-    <a href="#topology">Team</a>
+    <a href="#team">Team</a>
     <a href="#retros">Retros</a>
     <a href="#escalation">Escalation</a>
     <a href="#tutorials">Tutorials</a>
@@ -236,338 +235,343 @@ rect[data-node]:hover{filter:brightness(1.2)}
   </div>
 </nav>
 
-<!-- ══════════ HERO ══════════ -->
-<section id="hero">
-  <div class="tag reveal" style="color:var(--green)">Available for hire</div>
-  <h1 class="reveal">Technical<br>Product Manager.</h1>
-  <p class="sub reveal">Technical Product Manager — FinTech, SaaS, and AI platforms. Queens, New York. Green Card holder, no sponsorship required.</p>
-</section>
+<!-- HERO -->
+<div class="hero">
+  <div id="particles-hero"></div>
+  <div class="hero-eyebrow">Technical Delivery Portfolio</div>
+  <h1>
+    <span class="line1">Technical</span>
+    <span class="line2">Product Manager.</span>
+    <span class="line3">Cloud Architecture · AI Platforms · Delivery Frameworks</span>
+  </h1>
+  <p class="hero-sub">Six years of enterprise FinTech delivery — visualized. Every architecture decision, project timeline, risk, and retrospective from real-world platform work at Zurich Insurance and Real Garant.</p>
+  <div class="hero-cta">
+    <a href="https://stefanlaza.github.io/CV/" class="btn-gold">View CV Site</a>
+    <a href="Stefan_Lazarevic_CV.pdf" download class="btn-ghost">Download CV</a>
+  </div>
+</div>
 
-<!-- ══════════ AI WORK ══════════ -->
-<section id="ai-work">
-  <div class="tag reveal" style="color:var(--purple)">AI Product Delivery</div>
-  <h2 class="reveal">AI & Automation Platforms</h2>
-  <p class="sub reveal">End-to-end AI product ownership — from problem definition through deployment, adoption, and measurable outcome.</p>
+<!-- AI WORK -->
+<div class="alt-wrap">
+<div class="alt-inner" id="ai">
+  <div class="section-eyebrow reveal">AI Product Delivery</div>
+  <h2 class="section-title reveal">AI &amp; Automation<br><em>Platforms.</em></h2>
 
   <div class="ai-grid reveal">
-
     <div class="ai-card">
-      <span class="ai-card-label" style="background:rgba(167,139,250,0.1);color:var(--purple)">AI Chatbot Platform</span>
+      <span class="ai-badge">AI Chatbot · ServiceNow</span>
       <h3>Customer Service Automation</h3>
-      <p>Owned end-to-end delivery of an AI-powered chatbot for customer service automation, serving 20,000 users monthly across 5 European markets. Defined product requirements, selected vendor platform, managed integration with ServiceNow, and drove adoption across operations teams.</p>
+      <p>Owned end-to-end delivery of an AI-powered chatbot for customer service automation, serving 20,000 users monthly across 5 European markets. Defined product requirements, selected vendor platform, managed ServiceNow integration, and drove adoption across operations teams.</p>
       <div class="ai-metrics">
-        <div class="ai-metric"><div class="ai-metric-val" style="color:var(--purple)">62%</div><div class="ai-metric-label">Ticket reduction</div></div>
-        <div class="ai-metric"><div class="ai-metric-val" style="color:var(--green)">800→300</div><div class="ai-metric-label">Monthly tickets</div></div>
-        <div class="ai-metric"><div class="ai-metric-val" style="color:var(--blue)">20K</div><div class="ai-metric-label">Monthly users</div></div>
+        <div><span class="ai-metric-val">62%</span><span class="ai-metric-label">Ticket reduction</span></div>
+        <div><span class="ai-metric-val">800→300</span><span class="ai-metric-label">Monthly tickets</span></div>
+        <div><span class="ai-metric-val">20K</span><span class="ai-metric-label">Monthly users</span></div>
       </div>
-      <div class="ai-stack">
-        <span>ServiceNow</span><span>AI Chatbot</span><span>REST APIs</span><span>Java</span><span>5 Languages</span>
-      </div>
+      <div class="ai-stack"><span>ServiceNow</span><span>AI Chatbot</span><span>REST APIs</span><span>Java</span><span>5 Languages</span></div>
     </div>
-
     <div class="ai-card">
-      <span class="ai-card-label" style="background:rgba(34,211,238,0.1);color:var(--cyan)">Multilingual NLP</span>
+      <span class="ai-badge">Multilingual NLP</span>
       <h3>Automotive Parts Translation Engine</h3>
-      <p>Built and shipped an automated multilingual translation platform for car parts catalogs and financial invoices across German, French, Italian, Spanish, and English. Integrated European Car Catalog APIs (KBA, ETX) with custom domain-specific NLP logic to handle automotive nomenclature and invoice line items accurately.</p>
+      <p>Built and shipped an automated multilingual translation platform for car parts catalogs and financial invoices across German, French, Italian, Spanish, and English. Custom domain-specific NLP logic on top of the AI layer for automotive nomenclature accuracy.</p>
       <div class="ai-metrics">
-        <div class="ai-metric"><div class="ai-metric-val" style="color:var(--cyan)">5</div><div class="ai-metric-label">Languages</div></div>
-        <div class="ai-metric"><div class="ai-metric-val" style="color:var(--green)">100%</div><div class="ai-metric-label">Automated</div></div>
-        <div class="ai-metric"><div class="ai-metric-val" style="color:var(--aws)">0</div><div class="ai-metric-label">Manual steps</div></div>
+        <div><span class="ai-metric-val">5</span><span class="ai-metric-label">Languages</span></div>
+        <div><span class="ai-metric-val">100%</span><span class="ai-metric-label">Automated</span></div>
+        <div><span class="ai-metric-val">0</span><span class="ai-metric-label">Manual steps</span></div>
       </div>
-      <div class="ai-stack">
-        <span>NLP</span><span>KBA API</span><span>ETX API</span><span>Spring Boot</span><span>Java</span><span>Node.js</span>
-      </div>
+      <div class="ai-stack"><span>NLP</span><span>KBA API</span><span>ETX API</span><span>Spring Boot</span><span>Node.js</span></div>
     </div>
-
     <div class="ai-card">
-      <span class="ai-card-label" style="background:rgba(52,211,153,0.1);color:var(--green)">Invoice Automation</span>
+      <span class="ai-badge">Invoice Automation</span>
       <h3>AI-Powered Invoice Processing</h3>
-      <p>Defined and shipped an automated invoice processing platform for Zurich Insurance that eliminated manual data entry across finance operations. Owned the full product lifecycle from business problem definition through engineering delivery and stakeholder sign-off.</p>
+      <p>Defined and shipped an automated invoice processing platform for Zurich Insurance eliminating manual data entry across finance operations. Owned the full product lifecycle from business problem definition through engineering delivery and stakeholder sign-off.</p>
       <div class="ai-metrics">
-        <div class="ai-metric"><div class="ai-metric-val" style="color:var(--green)">97%</div><div class="ai-metric-label">Time reduction</div></div>
-        <div class="ai-metric"><div class="ai-metric-val" style="color:var(--blue)">30→1</div><div class="ai-metric-label">Days to process</div></div>
-        <div class="ai-metric"><div class="ai-metric-val" style="color:var(--purple)">200+</div><div class="ai-metric-label">Hours/mo saved</div></div>
+        <div><span class="ai-metric-val">97%</span><span class="ai-metric-label">Time reduction</span></div>
+        <div><span class="ai-metric-val">30→1</span><span class="ai-metric-label">Days to process</span></div>
+        <div><span class="ai-metric-val">200+</span><span class="ai-metric-label">Hours/mo saved</span></div>
       </div>
-      <div class="ai-stack">
-        <span>AWS</span><span>Spring Boot</span><span>xInvoice</span><span>UBL XML</span><span>FatturaPA</span><span>Kafka</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════ SERVICES ══════════ -->
-<section id="services" class="alt-bg">
-  <div class="tag reveal" style="color:var(--blue)">What I do</div>
-  <h2 class="reveal">Services</h2>
-  <p class="sub reveal">End-to-end technical product delivery — from roadmap and cloud architecture to production monitoring.</p>
-
-  <div class="services reveal">
-    <div class="svc">
-      <div class="svc-icon" style="background:rgba(167,139,250,0.12)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
-      </div>
-      <h3>Technical Product Management</h3>
-      <p>Roadmap ownership, backlog prioritization, PRDs, stakeholder alignment, and end-to-end delivery for enterprise FinTech and SaaS platforms.</p>
-      <span class="svc-tag" style="background:rgba(167,139,250,0.1);color:#a78bfa">TPM</span>
-    </div>
-    <div class="svc">
-      <div class="svc-icon" style="background:rgba(255,153,0,0.12)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#ff9900" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
-      </div>
-      <h3>AWS Cloud Architecture</h3>
-      <p>VPC design, EC2, S3, RDS, Lambda, IAM policies — full infrastructure provisioning, security hardening, and cost optimization.</p>
-      <span class="svc-tag" style="background:rgba(255,153,0,0.1);color:#ff9900">AWS</span>
-    </div>
-    <div class="svc">
-      <div class="svc-icon" style="background:rgba(34,211,238,0.12)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-      </div>
-      <h3>AI Platform Delivery</h3>
-      <p>End-to-end ownership of AI chatbot and NLP automation platforms — from build vs buy through vendor selection, integration, and adoption.</p>
-      <span class="svc-tag" style="background:rgba(34,211,238,0.1);color:#22d3ee">AI</span>
-    </div>
-    <div class="svc">
-      <div class="svc-icon" style="background:rgba(52,211,153,0.12)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-      </div>
-      <h3>ETL Pipelines</h3>
-      <p>Data ingestion from APIs, databases, and files. AWS Glue, PySpark transforms, S3 staging, and Redshift loading with full error handling.</p>
-      <span class="svc-tag" style="background:rgba(52,211,153,0.1);color:#34d399">Data</span>
-    </div>
-    <div class="svc">
-      <div class="svc-icon" style="background:rgba(34,211,238,0.12)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-      </div>
-      <h3>CI/CD Pipelines</h3>
-      <p>GitHub Actions, GitLab CI, Jenkins — automated build, test, and deploy workflows with blue-green and canary deployments.</p>
-      <span class="svc-tag" style="background:rgba(34,211,238,0.1);color:#22d3ee">Automation</span>
-    </div>
-    <div class="svc">
-      <div class="svc-icon" style="background:rgba(248,113,113,0.12)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      </div>
-      <h3>Monitoring & Alerting</h3>
-      <p>Prometheus, Grafana, CloudWatch — dashboards, uptime checks, log aggregation, and PagerDuty incident escalation.</p>
-      <span class="svc-tag" style="background:rgba(248,113,113,0.1);color:#f87171">Ops</span>
+      <div class="ai-stack"><span>AWS</span><span>Spring Boot</span><span>xInvoice</span><span>UBL XML</span><span>Kafka</span></div>
     </div>
   </div>
-</section>
+</div>
+</div>
 
-<!-- ══════════ CASE STUDIES ══════════ -->
-<section id="case-studies" class="alt-bg">
-  <div class="tag reveal" style="color:var(--green)">Proven Results</div>
-  <h2 class="reveal">Case Studies</h2>
-  <p class="sub reveal">Measurable outcomes from real-world infrastructure and delivery projects.</p>
+<!-- CASE STUDIES / IMPACT -->
+<div class="section-wrap" id="impact">
+  <div class="section-eyebrow reveal">Impact</div>
+  <h2 class="section-title reveal">Proven<br><em>Results.</em></h2>
 
-  <div class="case-studies reveal">
+  <div class="case-grid reveal">
     <div class="case-card">
-      <span class="case-label" style="background:rgba(52,211,153,0.1);color:var(--green)">CI/CD Optimization</span>
-      <h3>Deployment Pipeline Overhaul</h3>
-      <p class="case-desc">Migrated a monolithic Jenkins pipeline to GitHub Actions with parallelized builds, Docker layer caching, and blue-green deployments on ECS Fargate.</p>
-      <div class="metrics-row">
-        <div class="metric"><div class="metric-val" style="color:var(--green)">92%</div><div class="metric-label">Faster Deploys</div></div>
-        <div class="metric"><div class="metric-val" style="color:var(--blue)">2hr</div><div class="metric-label">to 8min</div></div>
-        <div class="metric"><div class="metric-val" style="color:var(--purple)">0</div><div class="metric-label">Downtime</div></div>
+      <div class="case-left">
+        <span class="case-label">CI/CD</span>
+        <span class="case-val">92%</span>
+        <span class="case-company">Deployment Speed</span>
       </div>
-      <div class="case-before-after">
-        <span>Manual deploys, 2hr windows</span>
-        <span class="arrow">&rarr;</span>
-        <span>Automated, 8min end-to-end</span>
+      <div class="case-right">
+        <h3>Pipeline Overhaul</h3>
+        <p>Migrated monolithic Jenkins pipeline to GitHub Actions with parallelized builds, Docker layer caching, and blue-green deployments on ECS Fargate.</p>
+        <ul class="case-wins">
+          <li>2hr manual deploys → 8min automated</li>
+          <li>Zero downtime cutover via blue-green strategy</li>
+          <li>Full CI/CD modernization across Kubernetes and Docker</li>
+        </ul>
       </div>
     </div>
-
     <div class="case-card">
-      <span class="case-label" style="background:rgba(255,153,0,0.1);color:var(--aws)">Cost Optimization</span>
-      <h3>AWS Infrastructure Right-Sizing</h3>
-      <p class="case-desc">Audited 120+ EC2 instances using CloudWatch metrics, migrated to Graviton, implemented Savings Plans and spot instances for non-critical workloads.</p>
-      <div class="metrics-row">
-        <div class="metric"><div class="metric-val" style="color:var(--aws)">41%</div><div class="metric-label">Cost Reduction</div></div>
-        <div class="metric"><div class="metric-val" style="color:var(--green)">$18K</div><div class="metric-label">/mo saved</div></div>
-        <div class="metric"><div class="metric-val" style="color:var(--blue)">99.97%</div><div class="metric-label">Uptime kept</div></div>
+      <div class="case-left">
+        <span class="case-label">AWS Cost</span>
+        <span class="case-val">41%</span>
+        <span class="case-company">Infrastructure Savings</span>
       </div>
-      <div class="case-before-after">
-        <span>$44K/mo overspend</span>
-        <span class="arrow">&rarr;</span>
-        <span>$26K/mo, same performance</span>
+      <div class="case-right">
+        <h3>AWS Right-Sizing</h3>
+        <p>Audited 120+ EC2 instances using CloudWatch metrics, migrated to Graviton, implemented Savings Plans and spot instances for non-critical workloads.</p>
+        <ul class="case-wins">
+          <li>$44K/mo → $26K/mo — $18K saved monthly</li>
+          <li>99.97% uptime maintained throughout migration</li>
+          <li>Zero performance degradation post-migration</li>
+        </ul>
       </div>
     </div>
-
     <div class="case-card">
-      <span class="case-label" style="background:rgba(248,113,113,0.1);color:var(--red)">Incident Response</span>
-      <h3>Production Outage &mdash; RDS Failover</h3>
-      <p class="case-desc">Led incident response for a critical database failure. Identified root cause (storage I/O exhaustion), executed Multi-AZ failover, and implemented automated alerting to prevent recurrence.</p>
-      <div class="metrics-row">
-        <div class="metric"><div class="metric-val" style="color:var(--red)">23min</div><div class="metric-label">MTTR</div></div>
-        <div class="metric"><div class="metric-val" style="color:var(--green)">100%</div><div class="metric-label">Data Intact</div></div>
-        <div class="metric"><div class="metric-val" style="color:var(--purple)">4</div><div class="metric-label">Runbooks Added</div></div>
+      <div class="case-left">
+        <span class="case-label">Incident</span>
+        <span class="case-val">23m</span>
+        <span class="case-company">MTTR</span>
       </div>
-      <div class="case-before-after">
-        <span>No runbooks, 2hr MTTR</span>
-        <span class="arrow">&rarr;</span>
-        <span>Automated failover, 23min MTTR</span>
+      <div class="case-right">
+        <h3>Production Outage — RDS Failover</h3>
+        <p>Led incident response for critical database failure. Identified root cause (storage I/O exhaustion), executed Multi-AZ failover, implemented automated alerting.</p>
+        <ul class="case-wins">
+          <li>MTTR reduced from 2hr to 23 minutes</li>
+          <li>100% data integrity maintained</li>
+          <li>4 runbooks written and published post-incident</li>
+        </ul>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ══════════ PROJECT TIMELINE ══════════ -->
-<section id="timeline">
-  <div class="tag reveal" style="color:var(--blue)">Project Management</div>
-  <h2 class="reveal">Project Timeline</h2>
-  <p class="sub reveal">Cloud migration project — from discovery to production handoff, managed end-to-end.</p>
+<!-- AWS DIAGRAM -->
+<div class="alt-wrap">
+<div class="alt-inner" id="aws">
+  <div class="section-eyebrow reveal">Cloud Architecture</div>
+  <h2 class="section-title reveal">AWS 3-Tier<br><em>Architecture.</em></h2>
+  <p style="font-size:0.82rem;color:var(--muted);margin-top:1rem;max-width:560px" class="reveal">CloudFront CDN → ALB → private EC2 instances across availability zones → RDS Multi-AZ + ElastiCache + S3. Click any node to trace connections.</p>
+
+  <div class="diagram-wrap reveal">
+    <div class="diagram-label">AWS — Production VPC</div>
+    <svg viewBox="0 0 960 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><filter id="g1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <rect x="200" y="40" width="720" height="440" rx="16" fill="none" stroke="rgba(255,153,0,0.1)" stroke-width="1.5" stroke-dasharray="8,4"/>
+      <text x="220" y="66" fill="rgba(255,153,0,0.35)" font-size="9" font-weight="600" letter-spacing="0.1em" font-family="monospace">VPC 10.0.0.0/16</text>
+      <rect x="280" y="90" width="280" height="160" rx="10" fill="rgba(74,158,255,0.03)" stroke="rgba(74,158,255,0.08)" stroke-width="1"/>
+      <text x="298" y="110" fill="rgba(74,158,255,0.4)" font-size="7" font-weight="600" letter-spacing="0.08em" font-family="monospace">PUBLIC SUBNET — AZ-1</text>
+      <rect x="280" y="280" width="280" height="180" rx="10" fill="rgba(167,139,250,0.03)" stroke="rgba(167,139,250,0.08)" stroke-width="1"/>
+      <text x="298" y="300" fill="rgba(167,139,250,0.4)" font-size="7" font-weight="600" letter-spacing="0.08em" font-family="monospace">PRIVATE SUBNET — AZ-1</text>
+      <rect x="600" y="280" width="280" height="180" rx="10" fill="rgba(167,139,250,0.03)" stroke="rgba(167,139,250,0.08)" stroke-width="1"/>
+      <text x="618" y="300" fill="rgba(167,139,250,0.4)" font-size="7" font-weight="600" letter-spacing="0.08em" font-family="monospace">PRIVATE SUBNET — AZ-2</text>
+      <!-- Nodes -->
+      <rect x="20" y="135" width="100" height="56" rx="10" fill="#111520" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" data-node="users"/>
+      <text x="70" y="162" text-anchor="middle" fill="#e8eaf0" font-size="13" font-weight="600" font-family="monospace">Users</text>
+      <text x="70" y="178" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">HTTPS</text>
+      <rect x="295" y="118" width="90" height="52" rx="8" fill="#111520" stroke="rgba(255,153,0,0.25)" stroke-width="1.5" data-node="r53"/>
+      <text x="340" y="144" text-anchor="middle" fill="#ff9900" font-size="10" font-weight="600" font-family="monospace">Route 53</text>
+      <text x="340" y="158" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">DNS</text>
+      <rect x="430" y="118" width="100" height="52" rx="8" fill="#111520" stroke="rgba(255,153,0,0.25)" stroke-width="1.5" data-node="cf"/>
+      <text x="480" y="144" text-anchor="middle" fill="#ff9900" font-size="10" font-weight="600" font-family="monospace">CloudFront</text>
+      <text x="480" y="158" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">CDN Edge</text>
+      <rect x="430" y="208" width="100" height="48" rx="8" fill="#111520" stroke="rgba(74,158,255,0.25)" stroke-width="1.5" data-node="alb"/>
+      <text x="480" y="232" text-anchor="middle" fill="#4a9eff" font-size="10" font-weight="600" font-family="monospace">ALB</text>
+      <text x="480" y="246" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Load Balancer</text>
+      <rect x="310" y="316" width="90" height="52" rx="8" fill="#111520" stroke="rgba(74,158,255,0.25)" stroke-width="1.5" data-node="ec2a"/>
+      <text x="355" y="342" text-anchor="middle" fill="#4a9eff" font-size="10" font-weight="600" font-family="monospace">EC2</text>
+      <text x="355" y="357" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">App Server 1</text>
+      <rect x="630" y="316" width="90" height="52" rx="8" fill="#111520" stroke="rgba(74,158,255,0.25)" stroke-width="1.5" data-node="ec2b"/>
+      <text x="675" y="342" text-anchor="middle" fill="#4a9eff" font-size="10" font-weight="600" font-family="monospace">EC2</text>
+      <text x="675" y="357" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">App Server 2</text>
+      <rect x="430" y="406" width="100" height="52" rx="8" fill="#111520" stroke="rgba(167,139,250,0.25)" stroke-width="1.5" data-node="rds"/>
+      <text x="480" y="432" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="600" font-family="monospace">RDS</text>
+      <text x="480" y="447" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Multi-AZ MySQL</text>
+      <rect x="750" y="406" width="100" height="52" rx="8" fill="#111520" stroke="rgba(248,113,113,0.25)" stroke-width="1.5" data-node="redis"/>
+      <text x="800" y="432" text-anchor="middle" fill="#f87171" font-size="10" font-weight="600" font-family="monospace">ElastiCache</text>
+      <text x="800" y="447" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Redis</text>
+      <rect x="630" y="118" width="90" height="52" rx="8" fill="#111520" stroke="rgba(52,211,153,0.25)" stroke-width="1.5" data-node="s3"/>
+      <text x="675" y="144" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600" font-family="monospace">S3</text>
+      <text x="675" y="158" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Static Assets</text>
+      <rect x="800" y="118" width="90" height="52" rx="8" fill="#111520" stroke="rgba(248,113,113,0.25)" stroke-width="1.5" data-node="cw"/>
+      <text x="845" y="144" text-anchor="middle" fill="#f87171" font-size="10" font-weight="600" font-family="monospace">CloudWatch</text>
+      <text x="845" y="158" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Monitoring</text>
+      <!-- Paths -->
+      <path d="M120,163 C180,163 240,144 295,144" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" id="aws-p1" data-path-nodes="users r53"/>
+      <path d="M385,144 L430,144" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" id="aws-p2" data-path-nodes="r53 cf"/>
+      <path d="M480,170 L480,208" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" id="aws-p3" data-path-nodes="cf alb"/>
+      <path d="M480,256 C480,286 400,316 400,342" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" id="aws-p4" data-path-nodes="alb ec2a"/>
+      <path d="M480,256 C480,286 620,316 630,342" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" id="aws-p5" data-path-nodes="alb ec2b"/>
+      <path d="M355,368 C355,406 430,426 430,432" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" id="aws-p6" data-path-nodes="ec2a rds"/>
+      <path d="M675,368 C675,406 530,426 530,432" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" id="aws-p7" data-path-nodes="ec2b rds"/>
+      <path d="M675,368 L750,432" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" id="aws-p8" data-path-nodes="ec2b redis"/>
+      <path d="M530,144 L630,144" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" id="aws-p9" data-path-nodes="cf s3"/>
+      <path d="M720,144 L800,144" stroke="rgba(255,255,255,0.05)" stroke-width="1.5" stroke-dasharray="4,3" id="aws-p10" data-path-nodes="s3 cw"/>
+      <!-- Packets -->
+      <circle r="3.5" fill="#ff9900" filter="url(#g1)"><animateMotion dur="2.5s" repeatCount="indefinite"><mpath href="#aws-p1"/></animateMotion></circle>
+      <circle r="3" fill="#ff9900" filter="url(#g1)"><animateMotion dur="1s" repeatCount="indefinite" begin="0.3s"><mpath href="#aws-p2"/></animateMotion></circle>
+      <circle r="3" fill="#4a9eff" filter="url(#g1)"><animateMotion dur="1.2s" repeatCount="indefinite" begin="0.6s"><mpath href="#aws-p3"/></animateMotion></circle>
+      <circle r="3.5" fill="#4a9eff" filter="url(#g1)"><animateMotion dur="2s" repeatCount="indefinite" begin="1s"><mpath href="#aws-p4"/></animateMotion></circle>
+      <circle r="3.5" fill="#4a9eff" filter="url(#g1)"><animateMotion dur="2s" repeatCount="indefinite" begin="1.5s"><mpath href="#aws-p5"/></animateMotion></circle>
+      <circle r="2.5" fill="#a78bfa" filter="url(#g1)"><animateMotion dur="2s" repeatCount="indefinite" begin="2s"><mpath href="#aws-p6"/></animateMotion></circle>
+      <circle r="2.5" fill="#a78bfa" filter="url(#g1)"><animateMotion dur="2s" repeatCount="indefinite" begin="2.4s"><mpath href="#aws-p7"/></animateMotion></circle>
+      <circle r="2.5" fill="#f87171" filter="url(#g1)"><animateMotion dur="1.5s" repeatCount="indefinite" begin="1.8s"><mpath href="#aws-p8"/></animateMotion></circle>
+      <circle r="2.5" fill="#34d399" filter="url(#g1)"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.8s"><mpath href="#aws-p9"/></animateMotion></circle>
+      <circle r="2" fill="#f87171" filter="url(#g1)"><animateMotion dur="2s" repeatCount="indefinite" begin="3s"><mpath href="#aws-p10"/></animateMotion></circle>
+    </svg>
+  </div>
+</div>
+</div>
+
+<!-- PROJECT TIMELINE -->
+<div class="section-wrap" id="timeline">
+  <div class="section-eyebrow reveal">Project Management</div>
+  <h2 class="section-title reveal">Project<br><em>Timeline.</em></h2>
 
   <div class="gantt-wrap reveal">
     <div class="gantt-header">
-      <span class="gantt-title">Cloud Migration — E-Commerce Platform</span>
+      <span class="gantt-title">Cloud Migration — Enterprise Platform</span>
       <div class="gantt-legend">
-        <span><span class="leg-dot" style="background:var(--blue)"></span> Planning</span>
-        <span><span class="leg-dot" style="background:var(--purple)"></span> Build</span>
-        <span><span class="leg-dot" style="background:var(--green)"></span> Deploy</span>
-        <span><span class="leg-dot" style="background:var(--aws)"></span> Milestone</span>
+        <span><span class="leg-dot" style="background:var(--blue)"></span>Planning</span>
+        <span><span class="leg-dot" style="background:var(--purple)"></span>Build</span>
+        <span><span class="leg-dot" style="background:var(--green)"></span>Deploy</span>
+        <span><span class="leg-dot" style="background:var(--aws)"></span>Milestone</span>
       </div>
     </div>
-    <div class="gantt-months">
-      <span>Task</span>
-      <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
-    </div>
-    <div class="gantt-phase">Phase 1 — Initiation & Discovery</div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--blue)"></span>Stakeholder Interviews</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:0%;width:12%;background:var(--blue)"></div></div></div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--blue)"></span>Current State Assessment</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:4%;width:14%;background:var(--blue)"></div></div></div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--blue)"></span>Risk Assessment & Budget</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:10%;width:10%;background:var(--blue)"></div></div></div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--aws)"></span>Project Charter Approved</div><div class="gantt-bar-area"><div class="gantt-milestone" style="left:20%;border-color:var(--aws);background:rgba(255,153,0,0.2)"></div></div></div>
-    <div class="gantt-phase">Phase 2 — Architecture & Planning</div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--blue)"></span>Target Architecture Design</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:18%;width:14%;background:var(--blue)"></div></div></div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--blue)"></span>IaC Module Development</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:22%;width:18%;background:var(--purple)"></div></div></div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--aws)"></span>Architecture Review Board</div><div class="gantt-bar-area"><div class="gantt-milestone" style="left:38%;border-color:var(--aws);background:rgba(255,153,0,0.2)"></div></div></div>
+    <div class="gantt-months"><span>Task</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span></div>
+    <div class="gantt-phase">Phase 1 — Discovery</div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--blue)"></span>Stakeholder Interviews</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:0%;width:12%;background:var(--blue)"></div></div></div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--blue)"></span>Current State Assessment</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:4%;width:14%;background:var(--blue)"></div></div></div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--aws)"></span>Project Charter Approved</div><div class="gantt-bar-area"><div class="gantt-milestone" style="left:20%;border-color:var(--aws);background:rgba(255,153,0,0.15)"></div></div></div>
+    <div class="gantt-phase">Phase 2 — Architecture</div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--purple)"></span>Target Architecture Design</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:18%;width:14%;background:var(--blue)"></div></div></div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--purple)"></span>IaC Module Development</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:22%;width:18%;background:var(--purple)"></div></div></div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--aws)"></span>Architecture Review Board</div><div class="gantt-bar-area"><div class="gantt-milestone" style="left:38%;border-color:var(--aws);background:rgba(255,153,0,0.15)"></div></div></div>
     <div class="gantt-phase">Phase 3 — Build & Migrate</div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--purple)"></span>Database Migration (DMS)</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:42%;width:16%;background:var(--purple)"></div></div></div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--purple)"></span>Application Containerization</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:40%;width:20%;background:var(--purple)"></div></div></div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--aws)"></span>UAT Sign-off</div><div class="gantt-bar-area"><div class="gantt-milestone" style="left:66%;border-color:var(--aws);background:rgba(255,153,0,0.2)"></div></div></div>
-    <div class="gantt-phase">Phase 4 — Deploy & Handoff</div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--green)"></span>Blue-Green Cutover</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:66%;width:8%;background:var(--green)"></div></div></div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--green)"></span>Monitoring & Alerting Setup</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:70%;width:10%;background:var(--green)"></div></div></div>
-    <div class="gantt-row"><div class="gantt-task"><span class="task-icon" style="background:var(--aws)"></span>Project Closure</div><div class="gantt-bar-area"><div class="gantt-milestone" style="left:88%;border-color:var(--aws);background:rgba(255,153,0,0.2)"></div></div></div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--purple)"></span>Database Migration (DMS)</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:42%;width:16%;background:var(--purple)"></div></div></div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--purple)"></span>Containerization</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:40%;width:20%;background:var(--purple)"></div></div></div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--aws)"></span>UAT Sign-off</div><div class="gantt-bar-area"><div class="gantt-milestone" style="left:66%;border-color:var(--aws);background:rgba(255,153,0,0.15)"></div></div></div>
+    <div class="gantt-phase">Phase 4 — Deploy</div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--green)"></span>Blue-Green Cutover</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:66%;width:8%;background:var(--green)"></div></div></div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--green)"></span>Monitoring Setup</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:70%;width:10%;background:var(--green)"></div></div></div>
+    <div class="gantt-row"><div class="gantt-task"><span class="task-dot" style="background:var(--aws)"></span>Project Closure</div><div class="gantt-bar-area"><div class="gantt-milestone" style="left:88%;border-color:var(--aws);background:rgba(255,153,0,0.15)"></div></div></div>
   </div>
-</section>
+</div>
 
-<!-- ══════════ RISK REGISTER ══════════ -->
-<section id="risks" class="alt-bg">
-  <div class="tag reveal" style="color:var(--red)">Risk Management</div>
-  <h2 class="reveal">Risk Register</h2>
-  <p class="sub reveal">Proactive risk identification and mitigation — scored by probability and impact.</p>
+<!-- RISK REGISTER -->
+<div class="alt-wrap">
+<div class="alt-inner" id="risks">
+  <div class="section-eyebrow reveal">Risk Management</div>
+  <h2 class="section-title reveal">Risk<br><em>Register.</em></h2>
 
   <div class="risk-wrap reveal">
-    <div style="padding:1.5rem 1.5rem 0;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)">Probability &times; Impact Matrix</div>
+    <div style="padding:1.5rem 1.5rem 0;font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted)">Probability × Impact Matrix</div>
     <div class="risk-matrix">
       <div class="axis-label"></div>
-      <div class="axis-label">Very Low</div><div class="axis-label">Low</div><div class="axis-label">Medium</div><div class="axis-label">High</div><div class="axis-label">Very High</div>
-      <div class="axis-label">Very High</div><div class="risk-cell med">5</div><div class="risk-cell med">10</div><div class="risk-cell high">15</div><div class="risk-cell crit">20</div><div class="risk-cell crit">25</div>
+      <div class="axis-label">V.Low</div><div class="axis-label">Low</div><div class="axis-label">Med</div><div class="axis-label">High</div><div class="axis-label">V.High</div>
+      <div class="axis-label">V.High</div><div class="risk-cell med">5</div><div class="risk-cell med">10</div><div class="risk-cell high">15</div><div class="risk-cell crit">20</div><div class="risk-cell crit">25</div>
       <div class="axis-label">High</div><div class="risk-cell low">4</div><div class="risk-cell med">8</div><div class="risk-cell med">12</div><div class="risk-cell high">16</div><div class="risk-cell crit">20</div>
-      <div class="axis-label">Medium</div><div class="risk-cell low">3</div><div class="risk-cell med">6</div><div class="risk-cell med">9</div><div class="risk-cell high">12</div><div class="risk-cell high">15</div>
+      <div class="axis-label">Med</div><div class="risk-cell low">3</div><div class="risk-cell med">6</div><div class="risk-cell med">9</div><div class="risk-cell high">12</div><div class="risk-cell high">15</div>
       <div class="axis-label">Low</div><div class="risk-cell low">2</div><div class="risk-cell low">4</div><div class="risk-cell med">6</div><div class="risk-cell med">8</div><div class="risk-cell med">10</div>
-      <div class="axis-label">Very Low</div><div class="risk-cell low">1</div><div class="risk-cell low">2</div><div class="risk-cell low">3</div><div class="risk-cell low">4</div><div class="risk-cell med">5</div>
+      <div class="axis-label">V.Low</div><div class="risk-cell low">1</div><div class="risk-cell low">2</div><div class="risk-cell low">3</div><div class="risk-cell low">4</div><div class="risk-cell med">5</div>
     </div>
     <table class="risk-table">
       <thead><tr><th>ID</th><th>Risk</th><th>Probability</th><th>Impact</th><th>Score</th><th>Mitigation</th><th>Status</th></tr></thead>
       <tbody>
-        <tr><td style="color:var(--text);font-weight:600">R-001</td><td style="color:var(--text)">Database migration data loss during DMS cutover</td><td>Medium</td><td>Very High</td><td><span class="risk-badge" style="background:rgba(248,113,113,0.1);color:var(--red)">15 — High</span></td><td>Parallel run 2 weeks; checksum validation; PITR enabled</td><td><span class="risk-badge" style="background:rgba(52,211,153,0.1);color:var(--green)">Mitigated</span></td></tr>
-        <tr><td style="color:var(--text);font-weight:600">R-002</td><td style="color:var(--text)">Vendor lock-in with proprietary AWS services</td><td>High</td><td>Medium</td><td><span class="risk-badge" style="background:rgba(248,113,113,0.1);color:var(--red)">12 — High</span></td><td>Abstract behind Terraform modules; portable alternatives where feasible</td><td><span class="risk-badge" style="background:rgba(251,146,60,0.1);color:var(--orange)">Monitoring</span></td></tr>
-        <tr><td style="color:var(--text);font-weight:600">R-003</td><td style="color:var(--text)">Key engineer leaves mid-migration</td><td>Medium</td><td>High</td><td><span class="risk-badge" style="background:rgba(248,113,113,0.1);color:var(--red)">12 — High</span></td><td>Cross-training, pair programming, documented runbooks</td><td><span class="risk-badge" style="background:rgba(52,211,153,0.1);color:var(--green)">Mitigated</span></td></tr>
-        <tr><td style="color:var(--text);font-weight:600">R-004</td><td style="color:var(--text)">Budget overrun due to scope creep</td><td>High</td><td>Medium</td><td><span class="risk-badge" style="background:rgba(248,113,113,0.1);color:var(--red)">12 — High</span></td><td>Formal change control; weekly budget reviews; scope locked after Phase 2</td><td><span class="risk-badge" style="background:rgba(251,146,60,0.1);color:var(--orange)">Monitoring</span></td></tr>
+        <tr><td style="color:var(--text);font-weight:500">R-001</td><td style="color:var(--text)">Database migration data loss during DMS cutover</td><td>Medium</td><td>Very High</td><td><span class="risk-badge" style="border-color:rgba(248,113,113,0.3);color:var(--red)">15 — High</span></td><td>Parallel run 2 weeks; checksum validation; PITR enabled</td><td><span class="risk-badge" style="border-color:rgba(52,211,153,0.3);color:var(--green)">Mitigated</span></td></tr>
+        <tr><td style="color:var(--text);font-weight:500">R-002</td><td style="color:var(--text)">Vendor lock-in with proprietary AWS services</td><td>High</td><td>Medium</td><td><span class="risk-badge" style="border-color:rgba(248,113,113,0.3);color:var(--red)">12 — High</span></td><td>Abstract behind Terraform modules; portable alternatives</td><td><span class="risk-badge" style="border-color:rgba(251,146,60,0.3);color:#fb923c">Monitoring</span></td></tr>
+        <tr><td style="color:var(--text);font-weight:500">R-003</td><td style="color:var(--text)">Key engineer leaves mid-migration</td><td>Medium</td><td>High</td><td><span class="risk-badge" style="border-color:rgba(248,113,113,0.3);color:var(--red)">12 — High</span></td><td>Cross-training, pair programming, documented runbooks</td><td><span class="risk-badge" style="border-color:rgba(52,211,153,0.3);color:var(--green)">Mitigated</span></td></tr>
+        <tr><td style="color:var(--text);font-weight:500">R-004</td><td style="color:var(--text)">Budget overrun due to scope creep</td><td>High</td><td>Medium</td><td><span class="risk-badge" style="border-color:rgba(248,113,113,0.3);color:var(--red)">12 — High</span></td><td>Formal change control; weekly budget reviews; scope locked Phase 2</td><td><span class="risk-badge" style="border-color:rgba(251,146,60,0.3);color:#fb923c">Monitoring</span></td></tr>
       </tbody>
     </table>
   </div>
-</section>
+</div>
+</div>
 
-<!-- ══════════ DELIVERY METRICS ══════════ -->
-<section id="delivery">
-  <div class="tag reveal" style="color:var(--cyan)">Delivery Performance</div>
-  <h2 class="reveal">Delivery Metrics</h2>
-  <p class="sub reveal">Quantified delivery outcomes across the last 4 quarters.</p>
-
-  <div class="del-metrics reveal">
-    <div class="del-card"><div class="del-val" style="color:var(--green)">94%</div><div class="del-label">On-Time Delivery Rate</div><div class="del-trend" style="color:var(--green)">+8% from Q1</div><div class="del-sparkline"><svg viewBox="0 0 120 32" fill="none"><path d="M0,28 L30,22 L60,18 L90,12 L120,6" stroke="var(--green)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="120" cy="6" r="2.5" fill="var(--green)"/></svg></div></div>
-    <div class="del-card"><div class="del-val" style="color:var(--blue)">38</div><div class="del-label">Sprint Velocity (avg pts)</div><div class="del-trend" style="color:var(--green)">+5 from Q1</div><div class="del-sparkline"><svg viewBox="0 0 120 32" fill="none"><path d="M0,26 L30,24 L60,18 L90,14 L120,8" stroke="var(--blue)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="120" cy="8" r="2.5" fill="var(--blue)"/></svg></div></div>
-    <div class="del-card"><div class="del-val" style="color:var(--purple)">-2.1%</div><div class="del-label">Budget Variance</div><div class="del-trend" style="color:var(--green)">Under budget</div><div class="del-sparkline"><svg viewBox="0 0 120 32" fill="none"><path d="M0,10 L30,14 L60,12 L90,16 L120,15" stroke="var(--purple)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="120" cy="15" r="2.5" fill="var(--purple)"/></svg></div></div>
-    <div class="del-card"><div class="del-val" style="color:var(--cyan)">1.8 days</div><div class="del-label">Avg Lead Time</div><div class="del-trend" style="color:var(--green)">-0.6 days from Q1</div><div class="del-sparkline"><svg viewBox="0 0 120 32" fill="none"><path d="M0,8 L30,12 L60,10 L90,16 L120,22" stroke="var(--cyan)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="120" cy="22" r="2.5" fill="var(--cyan)"/></svg></div></div>
-    <div class="del-card"><div class="del-val" style="color:var(--red)">0</div><div class="del-label">Missed Deadlines (Q4)</div><div class="del-trend" style="color:var(--green)">Down from 3 in Q1</div><div class="del-sparkline"><svg viewBox="0 0 120 32" fill="none"><path d="M0,8 L30,14 L60,18 L90,24 L120,28" stroke="var(--red)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="120" cy="28" r="2.5" fill="var(--red)"/></svg></div></div>
-    <div class="del-card"><div class="del-val" style="color:var(--aws)">7%</div><div class="del-label">Scope Change Rate</div><div class="del-trend" style="color:var(--green)">Within threshold</div><div class="del-sparkline"><svg viewBox="0 0 120 32" fill="none"><path d="M0,20 L30,18 L60,22 L90,16 L120,14" stroke="var(--aws)" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="120" cy="14" r="2.5" fill="var(--aws)"/></svg></div></div>
+<!-- DELIVERY METRICS -->
+<div class="section-wrap" id="delivery">
+  <div class="section-eyebrow reveal">Delivery Performance</div>
+  <h2 class="section-title reveal">Delivery<br><em>Metrics.</em></h2>
+  <div class="del-grid reveal">
+    <div class="del-card"><div class="del-val">94%</div><div class="del-label">On-Time Delivery</div><div class="del-trend" style="color:var(--green)">↑ +8% from Q1</div></div>
+    <div class="del-card"><div class="del-val">38</div><div class="del-label">Sprint Velocity (avg pts)</div><div class="del-trend" style="color:var(--green)">↑ +5 from Q1</div></div>
+    <div class="del-card"><div class="del-val">-2.1%</div><div class="del-label">Budget Variance</div><div class="del-trend" style="color:var(--green)">Under budget</div></div>
+    <div class="del-card"><div class="del-val">1.8d</div><div class="del-label">Avg Lead Time</div><div class="del-trend" style="color:var(--green)">↓ -0.6d from Q1</div></div>
+    <div class="del-card"><div class="del-val">7%</div><div class="del-label">Scope Change Rate</div><div class="del-trend" style="color:var(--green)">Within threshold</div></div>
+    <div class="del-card"><div class="del-val">0</div><div class="del-label">Missed Deadlines Q4</div><div class="del-trend" style="color:var(--green)">↓ from 3 in Q1</div></div>
   </div>
-</section>
+</div>
 
-<!-- ══════════ TEAM TOPOLOGY ══════════ -->
-<section id="topology" class="alt-bg">
-  <div class="tag reveal" style="color:var(--indigo)">Team Structure</div>
-  <h2 class="reveal">Team Topology</h2>
-  <p class="sub reveal">How I organize cross-functional teams for maximum flow and minimal cognitive load.</p>
-
+<!-- TEAM TOPOLOGY -->
+<div class="alt-wrap">
+<div class="alt-inner" id="team">
+  <div class="section-eyebrow reveal">Team Structure</div>
+  <h2 class="section-title reveal">Team<br><em>Topology.</em></h2>
   <div class="topo-wrap reveal">
-    <svg viewBox="0 0 960 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="480" y="30" text-anchor="middle" fill="var(--muted)" font-size="9" font-weight="700" letter-spacing="0.12em">TEAM TOPOLOGY — CLOUD MIGRATION PROGRAM</text>
-      <rect x="40" y="70" width="400" height="200" rx="16" fill="rgba(74,158,255,0.04)" stroke="rgba(74,158,255,0.15)" stroke-width="1.5"/>
-      <text x="60" y="95" fill="var(--blue)" font-size="9" font-weight="700" letter-spacing="0.1em">STREAM-ALIGNED TEAMS</text>
-      <text x="60" y="110" fill="var(--muted)" font-size="7">Aligned to business value streams — own full delivery lifecycle</text>
-      <rect x="60" y="125" width="170" height="60" rx="10" fill="var(--card)" stroke="rgba(74,158,255,0.3)" stroke-width="1.5"/>
-      <text x="145" y="150" text-anchor="middle" fill="var(--blue)" font-size="10" font-weight="600">Checkout Team</text>
-      <text x="145" y="165" text-anchor="middle" fill="var(--muted)" font-size="7">4 engineers &bull; 1 PM</text>
-      <rect x="250" y="125" width="170" height="60" rx="10" fill="var(--card)" stroke="rgba(74,158,255,0.3)" stroke-width="1.5"/>
-      <text x="335" y="150" text-anchor="middle" fill="var(--blue)" font-size="10" font-weight="600">Catalog Team</text>
-      <text x="335" y="165" text-anchor="middle" fill="var(--muted)" font-size="7">3 engineers &bull; 1 PM</text>
-      <rect x="60" y="200" width="170" height="60" rx="10" fill="var(--card)" stroke="rgba(74,158,255,0.3)" stroke-width="1.5"/>
-      <text x="145" y="225" text-anchor="middle" fill="var(--blue)" font-size="10" font-weight="600">User Auth Team</text>
-      <text x="145" y="240" text-anchor="middle" fill="var(--muted)" font-size="7">3 engineers &bull; 1 PM</text>
-      <rect x="520" y="70" width="400" height="120" rx="16" fill="rgba(167,139,250,0.04)" stroke="rgba(167,139,250,0.15)" stroke-width="1.5"/>
-      <text x="540" y="95" fill="var(--purple)" font-size="9" font-weight="700" letter-spacing="0.1em">PLATFORM TEAM</text>
-      <text x="540" y="110" fill="var(--muted)" font-size="7">Provides self-service infrastructure — reduces cognitive load on stream teams</text>
-      <rect x="540" y="125" width="160" height="50" rx="10" fill="var(--card)" stroke="rgba(167,139,250,0.3)" stroke-width="1.5"/>
-      <text x="620" y="148" text-anchor="middle" fill="var(--purple)" font-size="10" font-weight="600">Infra Platform</text>
-      <text x="620" y="162" text-anchor="middle" fill="var(--muted)" font-size="7">Terraform, CI/CD, K8s</text>
-      <rect x="720" y="125" width="180" height="50" rx="10" fill="var(--card)" stroke="rgba(167,139,250,0.3)" stroke-width="1.5"/>
-      <text x="810" y="148" text-anchor="middle" fill="var(--purple)" font-size="10" font-weight="600">Observability Platform</text>
-      <text x="810" y="162" text-anchor="middle" fill="var(--muted)" font-size="7">Monitoring, Logging, Alerts</text>
-      <rect x="520" y="220" width="400" height="100" rx="16" fill="rgba(52,211,153,0.04)" stroke="rgba(52,211,153,0.15)" stroke-width="1.5"/>
-      <text x="540" y="245" fill="var(--green)" font-size="9" font-weight="700" letter-spacing="0.1em">ENABLING TEAM</text>
-      <text x="540" y="260" fill="var(--muted)" font-size="7">Temporary coaching &amp; upskilling — helps stream teams adopt new tech</text>
-      <rect x="540" y="275" width="160" height="30" rx="8" fill="var(--card)" stroke="rgba(52,211,153,0.3)" stroke-width="1.5"/>
-      <text x="620" y="294" text-anchor="middle" fill="var(--green)" font-size="9" font-weight="600">Security Coaching</text>
-      <rect x="720" y="275" width="180" height="30" rx="8" fill="var(--card)" stroke="rgba(52,211,153,0.3)" stroke-width="1.5"/>
-      <text x="810" y="294" text-anchor="middle" fill="var(--green)" font-size="9" font-weight="600">Cloud Migration Coaching</text>
-      <line x1="520" y1="155" x2="440" y2="155" stroke="var(--purple)" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.5"/>
-      <text x="470" y="145" text-anchor="middle" fill="var(--purple)" font-size="6" font-weight="600" opacity="0.7">X-as-a-Service</text>
-      <path d="M520,270 Q470,270 440,235" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="6,3" fill="none" opacity="0.5"/>
-      <text x="465" y="260" text-anchor="middle" fill="var(--green)" font-size="6" font-weight="600" opacity="0.7">Facilitation</text>
-      <rect x="280" y="360" width="400" height="100" rx="16" fill="rgba(255,153,0,0.04)" stroke="rgba(255,153,0,0.2)" stroke-width="1.5"/>
-      <text x="480" y="390" text-anchor="middle" fill="var(--aws)" font-size="11" font-weight="700">Technical Product Manager</text>
-      <text x="480" y="410" text-anchor="middle" fill="var(--muted)" font-size="8">Cross-team coordination &bull; Risk management &bull; Stakeholder communication</text>
-      <text x="480" y="428" text-anchor="middle" fill="var(--muted)" font-size="8">Sprint planning &bull; Dependency resolution &bull; Delivery cadence</text>
-      <text x="480" y="446" text-anchor="middle" fill="var(--muted)" font-size="7" font-style="italic">&mdash; Stefan Lazarevic</text>
-      <line x1="380" y1="360" x2="240" y2="270" stroke="var(--aws)" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
-      <line x1="430" y1="360" x2="335" y2="270" stroke="var(--aws)" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
-      <line x1="530" y1="360" x2="620" y2="190" stroke="var(--aws)" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
-      <line x1="580" y1="360" x2="720" y2="320" stroke="var(--aws)" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
-      <text x="40" y="500" fill="var(--muted)" font-size="7" font-weight="600" letter-spacing="0.06em">INTERACTION MODES:</text>
-      <line x1="170" y1="497" x2="200" y2="497" stroke="var(--purple)" stroke-width="1.5" stroke-dasharray="6,3"/>
-      <text x="205" y="500" fill="var(--muted)" font-size="7">X-as-a-Service</text>
-      <line x1="300" y1="497" x2="330" y2="497" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="6,3"/>
-      <text x="335" y="500" fill="var(--muted)" font-size="7">Facilitation</text>
+    <svg viewBox="0 0 960 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="480" y="22" text-anchor="middle" fill="#6b7280" font-size="8" font-weight="600" letter-spacing="0.12em" font-family="monospace">TEAM TOPOLOGY — CLOUD MIGRATION PROGRAM</text>
+      <rect x="40" y="40" width="400" height="190" rx="12" fill="rgba(74,158,255,0.03)" stroke="rgba(74,158,255,0.12)" stroke-width="1.5"/>
+      <text x="58" y="62" fill="#4a9eff" font-size="8" font-weight="600" letter-spacing="0.1em" font-family="monospace">STREAM-ALIGNED TEAMS</text>
+      <text x="58" y="76" fill="#6b7280" font-size="7" font-family="monospace">Aligned to business value streams</text>
+      <rect x="58" y="90" width="160" height="52" rx="8" fill="#111520" stroke="rgba(74,158,255,0.2)" stroke-width="1.5"/>
+      <text x="138" y="116" text-anchor="middle" fill="#4a9eff" font-size="9" font-weight="600" font-family="monospace">Checkout Team</text>
+      <text x="138" y="130" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">4 engineers · 1 PM</text>
+      <rect x="238" y="90" width="160" height="52" rx="8" fill="#111520" stroke="rgba(74,158,255,0.2)" stroke-width="1.5"/>
+      <text x="318" y="116" text-anchor="middle" fill="#4a9eff" font-size="9" font-weight="600" font-family="monospace">Catalog Team</text>
+      <text x="318" y="130" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">3 engineers · 1 PM</text>
+      <rect x="58" y="158" width="160" height="52" rx="8" fill="#111520" stroke="rgba(74,158,255,0.2)" stroke-width="1.5"/>
+      <text x="138" y="184" text-anchor="middle" fill="#4a9eff" font-size="9" font-weight="600" font-family="monospace">User Auth Team</text>
+      <text x="138" y="198" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">3 engineers · 1 PM</text>
+      <rect x="500" y="40" width="420" height="110" rx="12" fill="rgba(167,139,250,0.03)" stroke="rgba(167,139,250,0.12)" stroke-width="1.5"/>
+      <text x="518" y="62" fill="#a78bfa" font-size="8" font-weight="600" letter-spacing="0.1em" font-family="monospace">PLATFORM TEAM</text>
+      <text x="518" y="76" fill="#6b7280" font-size="7" font-family="monospace">Self-service infrastructure</text>
+      <rect x="518" y="90" width="155" height="44" rx="8" fill="#111520" stroke="rgba(167,139,250,0.2)" stroke-width="1.5"/>
+      <text x="595" y="112" text-anchor="middle" fill="#a78bfa" font-size="9" font-weight="600" font-family="monospace">Infra Platform</text>
+      <text x="595" y="125" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Terraform, CI/CD, K8s</text>
+      <rect x="690" y="90" width="210" height="44" rx="8" fill="#111520" stroke="rgba(167,139,250,0.2)" stroke-width="1.5"/>
+      <text x="795" y="112" text-anchor="middle" fill="#a78bfa" font-size="9" font-weight="600" font-family="monospace">Observability Platform</text>
+      <text x="795" y="125" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Monitoring, Logging, Alerts</text>
+      <rect x="500" y="170" width="420" height="90" rx="12" fill="rgba(52,211,153,0.03)" stroke="rgba(52,211,153,0.12)" stroke-width="1.5"/>
+      <text x="518" y="192" fill="#34d399" font-size="8" font-weight="600" letter-spacing="0.1em" font-family="monospace">ENABLING TEAM</text>
+      <text x="518" y="206" fill="#6b7280" font-size="7" font-family="monospace">Temporary coaching &amp; upskilling</text>
+      <rect x="518" y="220" width="155" height="28" rx="6" fill="#111520" stroke="rgba(52,211,153,0.2)" stroke-width="1"/>
+      <text x="595" y="238" text-anchor="middle" fill="#34d399" font-size="8" font-weight="600" font-family="monospace">Security Coaching</text>
+      <rect x="690" y="220" width="210" height="28" rx="6" fill="#111520" stroke="rgba(52,211,153,0.2)" stroke-width="1"/>
+      <text x="795" y="238" text-anchor="middle" fill="#34d399" font-size="8" font-weight="600" font-family="monospace">Cloud Migration Coaching</text>
+      <line x1="500" y1="116" x2="440" y2="116" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="5,3" opacity="0.4"/>
+      <text x="460" y="108" text-anchor="middle" fill="#a78bfa" font-size="6" font-weight="600" opacity="0.6" font-family="monospace">X-as-a-Service</text>
+      <path d="M500,235 Q460,235 440,184" stroke="#34d399" stroke-width="1.2" stroke-dasharray="5,3" fill="none" opacity="0.4"/>
+      <text x="454" y="222" text-anchor="middle" fill="#34d399" font-size="6" font-weight="600" opacity="0.6" font-family="monospace">Facilitation</text>
+      <rect x="280" y="340" width="400" height="90" rx="12" fill="rgba(200,169,110,0.03)" stroke="rgba(200,169,110,0.15)" stroke-width="1.5"/>
+      <text x="480" y="368" text-anchor="middle" fill="#c8a96e" font-size="11" font-weight="600" font-family="monospace">Technical Product Manager</text>
+      <text x="480" y="386" text-anchor="middle" fill="#6b7280" font-size="7.5" font-family="monospace">Roadmap · Risk · Stakeholders · Sprint Planning · Delivery</text>
+      <text x="480" y="402" text-anchor="middle" fill="#6b7280" font-size="7" font-style="italic" font-family="monospace">— Stefan Lazarevic</text>
+      <line x1="380" y1="340" x2="240" y2="230" stroke="#c8a96e" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+      <line x1="430" y1="340" x2="318" y2="230" stroke="#c8a96e" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+      <line x1="530" y1="340" x2="620" y2="260" stroke="#c8a96e" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
+      <line x1="580" y1="340" x2="720" y2="260" stroke="#c8a96e" stroke-width="1" stroke-dasharray="4,3" opacity="0.3"/>
     </svg>
   </div>
-</section>
+</div>
+</div>
 
-<!-- ══════════ RETROSPECTIVE INSIGHTS ══════════ -->
-<section id="retros">
-  <div class="tag reveal" style="color:var(--green)">Continuous Improvement</div>
-  <h2 class="reveal">Retrospective Insights</h2>
-  <p class="sub reveal">Real takeaways from sprint retrospectives I've facilitated — showing iterative improvement.</p>
-
+<!-- RETROSPECTIVES -->
+<div class="section-wrap" id="retros">
+  <div class="section-eyebrow reveal">Continuous Improvement</div>
+  <h2 class="section-title reveal">Retrospective<br><em>Insights.</em></h2>
   <div class="retro-grid reveal">
     <div class="retro-card">
       <div class="retro-sprint" style="color:var(--blue)">Sprint 14 — Migration Phase 2</div>
       <h3>Database Migration Sprint</h3>
       <div class="retro-type" style="color:var(--green)">What went well</div>
       <ul class="retro-items went-well"><li>DMS replication finished 2 days ahead of schedule</li><li>Zero data discrepancies in checksum validation</li><li>Daily standups kept stakeholders informed</li></ul>
-      <div class="retro-type" style="color:var(--orange)">What to improve</div>
+      <div class="retro-type" style="color:#fb923c">What to improve</div>
       <ul class="retro-items improve"><li>Schema change coordination was ad-hoc</li><li>Staging environment drifted from production config</li></ul>
       <div class="retro-type" style="color:var(--blue)">Action items</div>
       <ul class="retro-items actions"><li>Create shared schema change calendar</li><li>Implement Terraform drift detection in CI pipeline</li></ul>
@@ -576,8 +580,8 @@ rect[data-node]:hover{filter:brightness(1.2)}
       <div class="retro-sprint" style="color:var(--purple)">Sprint 18 — Migration Phase 3</div>
       <h3>Containerization Sprint</h3>
       <div class="retro-type" style="color:var(--green)">What went well</div>
-      <ul class="retro-items went-well"><li>Multi-stage Docker builds reduced image size by 68%</li><li>Pair programming sessions accelerated onboarding</li></ul>
-      <div class="retro-type" style="color:var(--orange)">What to improve</div>
+      <ul class="retro-items went-well"><li>Multi-stage Docker builds reduced image size by 68%</li><li>Pair programming accelerated onboarding</li></ul>
+      <div class="retro-type" style="color:#fb923c">What to improve</div>
       <ul class="retro-items improve"><li>Local dev environment parity with ECS was poor</li><li>Too many WIP items — context-switching frequently</li></ul>
       <div class="retro-type" style="color:var(--blue)">Action items</div>
       <ul class="retro-items actions"><li>Introduce WIP limit of 2 per engineer</li><li>Weekly focus Friday — no meetings, deep work only</li></ul>
@@ -586,221 +590,217 @@ rect[data-node]:hover{filter:brightness(1.2)}
       <div class="retro-sprint" style="color:var(--aws)">Sprint 22 — Deploy & Handoff</div>
       <h3>Production Cutover Sprint</h3>
       <div class="retro-type" style="color:var(--green)">What went well</div>
-      <ul class="retro-items went-well"><li>Blue-green cutover completed with 0 downtime</li><li>Runbooks enabled on-call team to handle first week independently</li><li>Stakeholder demo — immediate sign-off</li></ul>
-      <div class="retro-type" style="color:var(--orange)">What to improve</div>
-      <ul class="retro-items improve"><li>Post-cutover monitoring alerts were too noisy</li><li>Some runbooks assumed familiarity with old system</li></ul>
+      <ul class="retro-items went-well"><li>Blue-green cutover completed with 0 downtime</li><li>Runbooks enabled on-call team to handle first week independently</li></ul>
+      <div class="retro-type" style="color:#fb923c">What to improve</div>
+      <ul class="retro-items improve"><li>Post-cutover monitoring alerts were too noisy</li><li>Some runbooks assumed prior system knowledge</li></ul>
       <div class="retro-type" style="color:var(--blue)">Action items</div>
       <ul class="retro-items actions"><li>Tune alert thresholds based on first week baseline</li><li>Rewrite runbooks assuming zero prior context</li></ul>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ══════════ ESCALATION FRAMEWORK ══════════ -->
-<section id="escalation" class="alt-bg">
-  <div class="tag reveal" style="color:var(--orange)">Decision Framework</div>
-  <h2 class="reveal">Escalation Framework</h2>
-  <p class="sub reveal">How I resolve blockers — a clear, repeatable decision flowchart for the team.</p>
-
+<!-- ESCALATION -->
+<div class="alt-wrap">
+<div class="alt-inner" id="escalation">
+  <div class="section-eyebrow reveal">Decision Framework</div>
+  <h2 class="section-title reveal">Escalation<br><em>Framework.</em></h2>
   <div class="esc-wrap reveal">
-    <svg viewBox="0 0 960 580" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="480" y="25" text-anchor="middle" fill="var(--muted)" font-size="9" font-weight="700" letter-spacing="0.12em">BLOCKER ESCALATION FLOWCHART</text>
-      <rect x="380" y="45" width="200" height="44" rx="22" fill="rgba(248,113,113,0.1)" stroke="var(--red)" stroke-width="1.5"/>
-      <text x="480" y="72" text-anchor="middle" fill="var(--red)" font-size="11" font-weight="700">Blocker Identified</text>
-      <line x1="480" y1="89" x2="480" y2="115" stroke="var(--muted)" stroke-width="1.5"/>
-      <polygon points="475,112 485,112 480,120" fill="var(--muted)"/>
-      <rect x="350" y="120" width="260" height="50" rx="12" fill="var(--card)" stroke="var(--blue)" stroke-width="1.5"/>
-      <text x="480" y="142" text-anchor="middle" fill="var(--blue)" font-size="10" font-weight="600">Can the team resolve it</text>
-      <text x="480" y="157" text-anchor="middle" fill="var(--blue)" font-size="10" font-weight="600">within the sprint?</text>
-      <line x1="350" y1="145" x2="250" y2="145" stroke="var(--green)" stroke-width="1.5"/>
-      <polygon points="253,140 253,150 245,145" fill="var(--green)"/>
-      <text x="300" y="138" text-anchor="middle" fill="var(--green)" font-size="8" font-weight="700">YES</text>
-      <rect x="80" y="120" width="165" height="50" rx="12" fill="rgba(52,211,153,0.08)" stroke="var(--green)" stroke-width="1.5"/>
-      <text x="162" y="142" text-anchor="middle" fill="var(--green)" font-size="9" font-weight="600">Team resolves internally</text>
-      <text x="162" y="157" text-anchor="middle" fill="var(--muted)" font-size="7">Track in sprint board</text>
-      <line x1="480" y1="170" x2="480" y2="205" stroke="var(--red)" stroke-width="1.5"/>
-      <polygon points="475,202 485,202 480,210" fill="var(--red)"/>
-      <text x="495" y="192" fill="var(--red)" font-size="8" font-weight="700">NO</text>
-      <rect x="340" y="210" width="280" height="50" rx="12" fill="var(--card)" stroke="var(--purple)" stroke-width="1.5"/>
-      <text x="480" y="232" text-anchor="middle" fill="var(--purple)" font-size="10" font-weight="600">Is the blocker technical</text>
-      <text x="480" y="247" text-anchor="middle" fill="var(--purple)" font-size="10" font-weight="600">or organizational?</text>
-      <line x1="340" y1="235" x2="250" y2="235" stroke="var(--cyan)" stroke-width="1.5"/>
-      <polygon points="253,230 253,240 245,235" fill="var(--cyan)"/>
-      <text x="295" y="228" text-anchor="middle" fill="var(--cyan)" font-size="8" font-weight="700">TECHNICAL</text>
-      <rect x="50" y="210" width="195" height="50" rx="12" fill="rgba(34,211,238,0.08)" stroke="var(--cyan)" stroke-width="1.5"/>
-      <text x="147" y="232" text-anchor="middle" fill="var(--cyan)" font-size="9" font-weight="600">Engage Platform Team</text>
-      <text x="147" y="247" text-anchor="middle" fill="var(--muted)" font-size="7">SLA: 4hr response</text>
-      <line x1="620" y1="235" x2="710" y2="235" stroke="var(--aws)" stroke-width="1.5"/>
-      <polygon points="707,230 707,240 715,235" fill="var(--aws)"/>
-      <text x="665" y="228" text-anchor="middle" fill="var(--aws)" font-size="8" font-weight="700">ORGANIZATIONAL</text>
-      <rect x="715" y="210" width="200" height="50" rx="12" fill="rgba(255,153,0,0.08)" stroke="var(--aws)" stroke-width="1.5"/>
-      <text x="815" y="232" text-anchor="middle" fill="var(--aws)" font-size="9" font-weight="600">TDL facilitates resolution</text>
-      <text x="815" y="247" text-anchor="middle" fill="var(--muted)" font-size="7">Cross-team sync within 24hr</text>
-      <line x1="480" y1="260" x2="480" y2="295" stroke="var(--muted)" stroke-width="1.5"/>
-      <polygon points="475,292 485,292 480,300" fill="var(--muted)"/>
-      <rect x="350" y="300" width="260" height="50" rx="12" fill="var(--card)" stroke="var(--orange)" stroke-width="1.5"/>
-      <text x="480" y="322" text-anchor="middle" fill="var(--orange)" font-size="10" font-weight="600">Still blocked after 48 hours?</text>
-      <line x1="610" y1="325" x2="710" y2="325" stroke="var(--green)" stroke-width="1.5"/>
-      <polygon points="707,320 707,330 715,325" fill="var(--green)"/>
-      <text x="660" y="318" text-anchor="middle" fill="var(--green)" font-size="8" font-weight="700">NO</text>
-      <rect x="715" y="300" width="200" height="50" rx="12" fill="rgba(52,211,153,0.08)" stroke="var(--green)" stroke-width="1.5"/>
-      <text x="815" y="322" text-anchor="middle" fill="var(--green)" font-size="9" font-weight="600">Resolved at team level</text>
-      <text x="815" y="337" text-anchor="middle" fill="var(--muted)" font-size="7">Document in retro</text>
-      <line x1="480" y1="350" x2="480" y2="385" stroke="var(--red)" stroke-width="1.5"/>
-      <polygon points="475,382 485,382 480,390" fill="var(--red)"/>
-      <text x="495" y="372" fill="var(--red)" font-size="8" font-weight="700">YES</text>
-      <rect x="330" y="390" width="300" height="55" rx="12" fill="rgba(248,113,113,0.08)" stroke="var(--red)" stroke-width="1.5"/>
-      <text x="480" y="412" text-anchor="middle" fill="var(--red)" font-size="10" font-weight="700">Escalate to Management</text>
-      <text x="480" y="428" text-anchor="middle" fill="var(--muted)" font-size="7">Written brief: impact, options, recommendation</text>
-      <text x="480" y="440" text-anchor="middle" fill="var(--muted)" font-size="7">SLA: Decision within 24hr</text>
-      <line x1="480" y1="445" x2="480" y2="475" stroke="var(--muted)" stroke-width="1.5"/>
-      <polygon points="475,472 485,472 480,480" fill="var(--muted)"/>
-      <rect x="180" y="480" width="180" height="45" rx="10" fill="rgba(52,211,153,0.06)" stroke="var(--green)" stroke-width="1"/>
-      <text x="270" y="500" text-anchor="middle" fill="var(--green)" font-size="9" font-weight="600">Re-prioritize Backlog</text>
-      <text x="270" y="514" text-anchor="middle" fill="var(--muted)" font-size="7">Adjust scope/timeline</text>
-      <rect x="390" y="480" width="180" height="45" rx="10" fill="rgba(74,158,255,0.06)" stroke="var(--blue)" stroke-width="1"/>
-      <text x="480" y="500" text-anchor="middle" fill="var(--blue)" font-size="9" font-weight="600">Add Resources</text>
-      <text x="480" y="514" text-anchor="middle" fill="var(--muted)" font-size="7">Staff or vendor support</text>
-      <rect x="600" y="480" width="180" height="45" rx="10" fill="rgba(167,139,250,0.06)" stroke="var(--purple)" stroke-width="1"/>
-      <text x="690" y="500" text-anchor="middle" fill="var(--purple)" font-size="9" font-weight="600">Accept &amp; Communicate</text>
-      <text x="690" y="514" text-anchor="middle" fill="var(--muted)" font-size="7">Update stakeholders on delay</text>
-      <line x1="480" y1="480" x2="270" y2="480" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4,3"/>
-      <line x1="480" y1="480" x2="690" y2="480" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4,3"/>
-      <text x="480" y="548" text-anchor="middle" fill="var(--muted)" font-size="7" font-weight="600" letter-spacing="0.06em">ALL ESCALATIONS LOGGED &bull; REVIEWED WEEKLY &bull; TRACKED TO CLOSURE</text>
-      <rect x="300" y="558" width="360" height="28" rx="8" fill="rgba(255,255,255,0.02)" stroke="var(--border)" stroke-width="1"/>
-      <text x="320" y="576" fill="var(--green)" font-size="7" font-weight="700">L1 Team: &lt;4hr</text>
-      <text x="420" y="576" fill="var(--cyan)" font-size="7" font-weight="700">L2 Platform/TDL: &lt;24hr</text>
-      <text x="550" y="576" fill="var(--red)" font-size="7" font-weight="700">L3 Management: &lt;48hr</text>
+    <svg viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="480" y="22" text-anchor="middle" fill="#6b7280" font-size="8" font-weight="600" letter-spacing="0.12em" font-family="monospace">BLOCKER ESCALATION FLOWCHART</text>
+      <rect x="380" y="38" width="200" height="40" rx="20" fill="rgba(248,113,113,0.08)" stroke="rgba(248,113,113,0.3)" stroke-width="1.5"/>
+      <text x="480" y="63" text-anchor="middle" fill="#f87171" font-size="10" font-weight="600" font-family="monospace">Blocker Identified</text>
+      <line x1="480" y1="78" x2="480" y2="100" stroke="#6b7280" stroke-width="1.5"/>
+      <polygon points="475,98 485,98 480,106" fill="#6b7280"/>
+      <rect x="350" y="106" width="260" height="46" rx="8" fill="#111520" stroke="rgba(74,158,255,0.25)" stroke-width="1.5"/>
+      <text x="480" y="126" text-anchor="middle" fill="#4a9eff" font-size="9" font-weight="600" font-family="monospace">Can the team resolve it</text>
+      <text x="480" y="141" text-anchor="middle" fill="#4a9eff" font-size="9" font-weight="600" font-family="monospace">within the sprint?</text>
+      <line x1="350" y1="129" x2="250" y2="129" stroke="#34d399" stroke-width="1.5"/>
+      <polygon points="253,124 253,134 245,129" fill="#34d399"/>
+      <text x="300" y="122" text-anchor="middle" fill="#34d399" font-size="7" font-weight="600" font-family="monospace">YES</text>
+      <rect x="78" y="106" width="165" height="46" rx="8" fill="rgba(52,211,153,0.06)" stroke="rgba(52,211,153,0.2)" stroke-width="1.5"/>
+      <text x="160" y="126" text-anchor="middle" fill="#34d399" font-size="8" font-weight="600" font-family="monospace">Team resolves</text>
+      <text x="160" y="140" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Track in sprint board</text>
+      <line x1="480" y1="152" x2="480" y2="178" stroke="#f87171" stroke-width="1.5"/>
+      <polygon points="475,176 485,176 480,184" fill="#f87171"/>
+      <text x="494" y="168" fill="#f87171" font-size="7" font-weight="600" font-family="monospace">NO</text>
+      <rect x="340" y="184" width="280" height="46" rx="8" fill="#111520" stroke="rgba(167,139,250,0.25)" stroke-width="1.5"/>
+      <text x="480" y="204" text-anchor="middle" fill="#a78bfa" font-size="9" font-weight="600" font-family="monospace">Technical or</text>
+      <text x="480" y="219" text-anchor="middle" fill="#a78bfa" font-size="9" font-weight="600" font-family="monospace">organizational?</text>
+      <line x1="340" y1="207" x2="250" y2="207" stroke="var(--cyan)" stroke-width="1.5"/>
+      <polygon points="253,202 253,212 245,207" fill="var(--cyan)"/>
+      <text x="295" y="200" text-anchor="middle" fill="var(--cyan)" font-size="7" font-weight="600" font-family="monospace">TECH</text>
+      <rect x="50" y="184" width="195" height="46" rx="8" fill="rgba(34,211,238,0.06)" stroke="rgba(34,211,238,0.2)" stroke-width="1.5"/>
+      <text x="147" y="204" text-anchor="middle" fill="var(--cyan)" font-size="8" font-weight="600" font-family="monospace">Engage Platform Team</text>
+      <text x="147" y="218" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">SLA: 4hr response</text>
+      <line x1="620" y1="207" x2="700" y2="207" stroke="#ff9900" stroke-width="1.5"/>
+      <polygon points="697,202 697,212 705,207" fill="#ff9900"/>
+      <text x="660" y="200" text-anchor="middle" fill="#ff9900" font-size="7" font-weight="600" font-family="monospace">ORG</text>
+      <rect x="705" y="184" width="200" height="46" rx="8" fill="rgba(255,153,0,0.06)" stroke="rgba(255,153,0,0.2)" stroke-width="1.5"/>
+      <text x="805" y="204" text-anchor="middle" fill="#ff9900" font-size="8" font-weight="600" font-family="monospace">TDL facilitates</text>
+      <text x="805" y="218" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Cross-team sync 24hr</text>
+      <line x1="480" y1="230" x2="480" y2="258" stroke="#6b7280" stroke-width="1.5"/>
+      <polygon points="475,256 485,256 480,264" fill="#6b7280"/>
+      <rect x="350" y="264" width="260" height="46" rx="8" fill="#111520" stroke="rgba(251,146,60,0.25)" stroke-width="1.5"/>
+      <text x="480" y="291" text-anchor="middle" fill="#fb923c" font-size="9" font-weight="600" font-family="monospace">Still blocked after 48hr?</text>
+      <line x1="610" y1="287" x2="700" y2="287" stroke="#34d399" stroke-width="1.5"/>
+      <polygon points="697,282 697,292 705,287" fill="#34d399"/>
+      <text x="654" y="280" text-anchor="middle" fill="#34d399" font-size="7" font-weight="600" font-family="monospace">NO</text>
+      <rect x="705" y="264" width="200" height="46" rx="8" fill="rgba(52,211,153,0.06)" stroke="rgba(52,211,153,0.2)" stroke-width="1.5"/>
+      <text x="805" y="284" text-anchor="middle" fill="#34d399" font-size="8" font-weight="600" font-family="monospace">Resolved at team level</text>
+      <text x="805" y="298" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Document in retro</text>
+      <line x1="480" y1="310" x2="480" y2="338" stroke="#f87171" stroke-width="1.5"/>
+      <polygon points="475,336 485,336 480,344" fill="#f87171"/>
+      <text x="494" y="326" fill="#f87171" font-size="7" font-weight="600" font-family="monospace">YES</text>
+      <rect x="330" y="344" width="300" height="52" rx="8" fill="rgba(248,113,113,0.06)" stroke="rgba(248,113,113,0.25)" stroke-width="1.5"/>
+      <text x="480" y="364" text-anchor="middle" fill="#f87171" font-size="10" font-weight="600" font-family="monospace">Escalate to Management</text>
+      <text x="480" y="379" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Written brief · decision within 24hr</text>
+      <line x1="480" y1="396" x2="480" y2="420" stroke="#6b7280" stroke-width="1.5"/>
+      <polygon points="475,418 485,418 480,426" fill="#6b7280"/>
+      <rect x="175" y="426" width="175" height="40" rx="6" fill="rgba(52,211,153,0.05)" stroke="rgba(52,211,153,0.15)" stroke-width="1"/>
+      <text x="262" y="444" text-anchor="middle" fill="#34d399" font-size="8" font-weight="600" font-family="monospace">Re-prioritize</text>
+      <text x="262" y="456" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Adjust scope/timeline</text>
+      <rect x="392" y="426" width="175" height="40" rx="6" fill="rgba(74,158,255,0.05)" stroke="rgba(74,158,255,0.15)" stroke-width="1"/>
+      <text x="479" y="444" text-anchor="middle" fill="#4a9eff" font-size="8" font-weight="600" font-family="monospace">Add Resources</text>
+      <text x="479" y="456" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Staff or vendor</text>
+      <rect x="608" y="426" width="175" height="40" rx="6" fill="rgba(167,139,250,0.05)" stroke="rgba(167,139,250,0.15)" stroke-width="1"/>
+      <text x="695" y="444" text-anchor="middle" fill="#a78bfa" font-size="8" font-weight="600" font-family="monospace">Accept &amp; Communicate</text>
+      <text x="695" y="456" text-anchor="middle" fill="#6b7280" font-size="7" font-family="monospace">Update stakeholders</text>
+      <line x1="480" y1="426" x2="262" y2="426" stroke="#6b7280" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="480" y1="426" x2="695" y2="426" stroke="#6b7280" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="480" y="514" text-anchor="middle" fill="#6b7280" font-size="6.5" font-weight="600" letter-spacing="0.08em" font-family="monospace">L1 Team: &lt;4hr · L2 Platform/TDL: &lt;24hr · L3 Management: &lt;48hr</text>
     </svg>
   </div>
-</section>
+</div>
+</div>
 
-<!-- ══════════ TUTORIALS ══════════ -->
-<section id="tutorials" class="alt-bg">
-  <div class="tag reveal" style="color:var(--aws)">Technical Tutorials</div>
-  <h2 class="reveal">Infrastructure Guides</h2>
-  <p class="sub reveal">Step-by-step setup guides for every architecture pattern on this site — written for engineers who want to build it themselves.</p>
-
-  <div class="case-studies reveal">
-    <div class="case-card">
-      <span class="case-label" style="background:rgba(255,153,0,0.1);color:var(--aws)">AWS</span>
+<!-- TUTORIALS -->
+<div class="section-wrap" id="tutorials">
+  <div class="section-eyebrow reveal">Technical Tutorials</div>
+  <h2 class="section-title reveal">Infrastructure<br><em>Guides.</em></h2>
+  <div class="tut-grid reveal">
+    <div class="tut-card">
+      <span class="tut-badge" style="border-color:rgba(255,153,0,0.3);color:#ff9900">AWS</span>
       <h3>AWS 3-Tier Architecture</h3>
-      <p class="case-desc">Full setup guide — CloudFront, ALB, EC2 across availability zones, RDS Multi-AZ, ElastiCache, S3, and CloudWatch monitoring.</p>
-      <a href="tutorials/aws-3tier.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--aws);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <p>Full setup guide — CloudFront, ALB, EC2 across AZs, RDS Multi-AZ, ElastiCache, S3, CloudWatch.</p>
+      <a href="tutorials/aws-3tier.html" class="tut-link">View Tutorial →</a>
     </div>
-    <div class="case-card">
-      <span class="case-label" style="background:rgba(129,140,248,0.1);color:var(--indigo)">Network</span>
+    <div class="tut-card">
+      <span class="tut-badge" style="border-color:rgba(129,140,248,0.3);color:#818cf8">Network</span>
       <h3>Cisco Enterprise Network</h3>
-      <p class="case-desc">Three-tier campus design with redundant ASA firewalls, Cat 9500 core switching, distribution layer, and VLAN segmentation.</p>
-      <a href="tutorials/cisco-network.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--indigo);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <p>Three-tier campus design with redundant ASA firewalls, Cat 9500 core switching, and VLAN segmentation.</p>
+      <a href="tutorials/cisco-network.html" class="tut-link">View Tutorial →</a>
     </div>
-    <div class="case-card">
-      <span class="case-label" style="background:rgba(52,211,153,0.1);color:var(--green)">Data</span>
+    <div class="tut-card">
+      <span class="tut-badge" style="border-color:rgba(52,211,153,0.3);color:#34d399">Data</span>
       <h3>ETL Pipeline Architecture</h3>
-      <p class="case-desc">REST API, database, and file ingestion through AWS Glue PySpark transforms, S3 staging, and Redshift loading with full error handling.</p>
-      <a href="tutorials/etl-pipeline.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--green);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <p>REST API, database, and file ingestion through AWS Glue PySpark transforms, S3, and Redshift loading.</p>
+      <a href="tutorials/etl-pipeline.html" class="tut-link">View Tutorial →</a>
     </div>
-    <div class="case-card">
-      <span class="case-label" style="background:rgba(34,211,238,0.1);color:var(--cyan)">Batch</span>
+    <div class="tut-card">
+      <span class="tut-badge" style="border-color:rgba(34,211,238,0.3);color:#22d3ee">Batch</span>
       <h3>Scheduled Batch Pipeline</h3>
-      <p class="case-desc">EventBridge cron triggers Step Functions — Lambda validates, AWS Batch runs parallel Fargate jobs, results to S3, SNS alerts on completion.</p>
-      <a href="tutorials/batch-pipeline.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--cyan);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <p>EventBridge cron → Step Functions → Lambda validates → AWS Batch Fargate jobs → S3 → SNS alerts.</p>
+      <a href="tutorials/batch-pipeline.html" class="tut-link">View Tutorial →</a>
     </div>
-    <div class="case-card">
-      <span class="case-label" style="background:rgba(34,211,238,0.1);color:var(--cyan)">Microservices</span>
+    <div class="tut-card">
+      <span class="tut-badge" style="border-color:rgba(34,211,238,0.3);color:#22d3ee">Microservices</span>
       <h3>Java Microservices to Kubernetes</h3>
-      <p class="case-desc">Jenkins builds Spring Boot services with Maven, runs tests, builds Docker images, pushes to Harbor, deploys to Kubernetes with rolling updates.</p>
-      <a href="tutorials/microservices-k8s.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--cyan);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <p>Jenkins builds Spring Boot with Maven, tests, Docker images, pushes to Harbor, deploys to K8s rolling.</p>
+      <a href="tutorials/microservices-k8s.html" class="tut-link">View Tutorial →</a>
     </div>
-    <div class="case-card">
-      <span class="case-label" style="background:rgba(251,146,60,0.1);color:var(--orange)">Monolith</span>
+    <div class="tut-card">
+      <span class="tut-badge" style="border-color:rgba(251,146,60,0.3);color:#fb923c">Monolith</span>
       <h3>Java Monolith to EC2/Tomcat</h3>
-      <p class="case-desc">Jenkins builds WAR with Maven, uploads to S3, Ansible rolling deploy to EC2 Tomcat instances behind ALB with health checks.</p>
-      <a href="tutorials/monolith-ec2.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--orange);text-decoration:none;font-size:0.85rem;font-weight:500;margin-top:0.5rem">View Tutorial <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <p>Jenkins builds WAR, uploads to S3, Ansible rolling deploy to EC2 Tomcat instances behind ALB.</p>
+      <a href="tutorials/monolith-ec2.html" class="tut-link">View Tutorial →</a>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ══════════ CONTACT ══════════ -->
-<section id="contact">
-  <div class="tag reveal" style="color:var(--cyan)">Get in touch</div>
-  <h2 class="reveal">Let's talk.</h2>
-  <p class="sub reveal">Senior TPM available for US remote or hybrid roles. Green Card holder, no sponsorship required.</p>
+<!-- CONTACT -->
+<div class="alt-wrap">
+<div class="contact-wrap" id="contact">
+  <div class="section-eyebrow reveal" style="justify-content:center">Contact</div>
+  <h2 class="section-title reveal" style="font-size:clamp(3rem,7vw,5rem)">Let's<br><em>talk.</em></h2>
+  <p class="reveal" style="color:var(--muted);font-size:0.8rem;max-width:460px;margin:1rem auto 0;line-height:1.9">Senior TPM available for US remote or hybrid roles. Green Card holder, no sponsorship required. Queens, New York.</p>
   <div class="contact-links reveal">
-    <a href="https://github.com/stefanlaza" target="_blank">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-      GitHub
-    </a>
-    <a href="mailto:stefan.lazarevic87@gmail.com">
+    <a href="mailto:stefan.lazarevic87@gmail.com" class="contact-link">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       Email
     </a>
-    <a href="https://www.linkedin.com/in/stefanlazarevic/" target="_blank">
+    <a href="https://linkedin.com/in/stefanlazarevic" target="_blank" class="contact-link">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       LinkedIn
     </a>
-    <a href="Stefan_Lazarevic_CV.pdf" download>
+    <a href="https://github.com/stefanlaza" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+    <a href="https://stefanlaza.github.io/CV/" class="contact-link" style="border-color:rgba(200,169,110,0.3);color:var(--accent)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      CV Site
+    </a>
+    <a href="Stefan_Lazarevic_CV.pdf" download class="contact-link" style="border-color:rgba(200,169,110,0.3);color:var(--accent)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
       Download CV
     </a>
-    <a href="https://stefanlaza.github.io/CV/" target="_blank">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-      Portfolio
-    </a>
   </div>
-</section>
+</div>
+</div>
 
 <footer>
-  <p>Stefan Lazarevic &mdash; Technical Product Manager &mdash; 2026</p>
+  <p>Stefan Lazarevic &mdash; Technical Product Manager &mdash; Queens, New York &mdash; 2026</p>
 </footer>
 
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
-  const els=document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    const obs=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
-    },{threshold:0.08});
-    els.forEach(el=>obs.observe(el));
-  }else{els.forEach(el=>el.classList.add('visible'))}
+  // Scroll reveal
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+  },{threshold:0.06});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-  const dashEls={uptime:document.getElementById('dash-uptime'),latency:document.getElementById('dash-latency'),rps:document.getElementById('dash-rps'),errors:document.getElementById('dash-errors')};
-  if(dashEls.uptime){
-    setInterval(()=>{
-      const r=(min,max)=>(Math.random()*(max-min)+min);
-      dashEls.uptime.textContent=r(99.95,99.99).toFixed(2)+'%';
-      dashEls.latency.textContent=Math.round(r(38,52))+'ms';
-      dashEls.rps.textContent=r(1.0,1.4).toFixed(1)+'K';
-      dashEls.errors.textContent=r(0.01,0.04).toFixed(2)+'%';
-    },3000);
+  // Scroll progress
+  window.addEventListener('scroll',()=>{
+    const pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+    document.getElementById('scrollLine').style.width=pct+'%';
+  });
+
+  // Particles
+  const container=document.getElementById('particles-hero');
+  if(container){
+    for(let i=0;i<100;i++){
+      const p=document.createElement('div');
+      p.className='particle';
+      const size=Math.random()*2.5+1;
+      const colors=['#d4a853','#c8a96e','#e8c98e','#a07840'];
+      p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;bottom:${Math.random()*8}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*14}s;animation-duration:${Math.random()*6+10}s`;
+      container.appendChild(p);
+    }
   }
 
-  document.querySelectorAll('.diagram svg').forEach(svg=>{
+  // ADR toggles
+  document.querySelectorAll('.adr-header').forEach(h=>{
+    h.addEventListener('click',()=>h.parentElement.classList.toggle('open'));
+  });
+
+  // Click to highlight AWS diagram
+  document.querySelectorAll('.diagram-wrap svg').forEach(svg=>{
     svg.addEventListener('click',e=>{
       const node=e.target.closest('rect[data-node]');
-      if(!node){
-        svg.removeAttribute('data-active');
-        svg.closest('.diagram').classList.remove('active');
-        svg.querySelectorAll('.hl').forEach(el=>el.classList.remove('hl'));
-        return;
-      }
+      if(!node){svg.removeAttribute('data-active');svg.querySelectorAll('.hl').forEach(el=>el.classList.remove('hl'));return}
       const id=node.dataset.node;
       svg.setAttribute('data-active',id);
-      svg.closest('.diagram').classList.add('active');
       svg.querySelectorAll('.hl').forEach(el=>el.classList.remove('hl'));
       node.classList.add('hl');
       let sib=node.nextElementSibling;
       while(sib&&sib.tagName==='text'){sib.classList.add('hl');sib=sib.nextElementSibling}
       svg.querySelectorAll('[data-path-nodes]').forEach(el=>{
-        const nodes=el.dataset.pathNodes.split(' ');
-        if(nodes.includes(id)){
+        if(el.dataset.pathNodes.split(' ').includes(id)){
           el.classList.add('hl');
-          const otherId=nodes.find(n=>n!==id)||nodes[0];
-          const otherRect=svg.querySelector('rect[data-node="'+otherId+'"]');
-          if(otherRect){
-            otherRect.classList.add('hl');
-            let s=otherRect.nextElementSibling;
-            while(s&&s.tagName==='text'){s.classList.add('hl');s=s.nextElementSibling}
-          }
+          const otherId=el.dataset.pathNodes.split(' ').find(n=>n!==id);
+          const other=svg.querySelector(`rect[data-node="${otherId}"]`);
+          if(other){other.classList.add('hl');let s=other.nextElementSibling;while(s&&s.tagName==='text'){s.classList.add('hl');s=s.nextElementSibling}}
         }
       });
     });
