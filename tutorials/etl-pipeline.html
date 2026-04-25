@@ -1,350 +1,744 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>ETL Pipeline Setup Guide — Stefan Laza</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETL Pipeline Architecture — Stefan Lazarevic</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',system-ui,sans-serif;background:#050507;color:#f0f0f5;line-height:1.7;-webkit-font-smoothing:antialiased}
-.wrap{max-width:820px;margin:0 auto;padding:3rem 2rem 5rem}
-a{color:#34d399;text-decoration:none}.back{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;color:#6e6e80;margin-bottom:2.5rem;transition:color .2s}.back:hover{color:#f0f0f5}
-h1{font-size:2.2rem;font-weight:700;letter-spacing:-.03em;line-height:1.15;margin-bottom:.5rem}
-.subtitle{color:#6e6e80;font-size:1rem;margin-bottom:3rem}
-h2{font-size:1.35rem;font-weight:600;letter-spacing:-.02em;margin:3rem 0 1rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.06)}
-h3{font-size:1rem;font-weight:600;margin:1.5rem 0 .5rem;color:#34d399}
-p,li{font-size:.88rem;color:#c0c0c8;margin-bottom:.6rem}
-ul,ol{padding-left:1.4rem;margin-bottom:1rem}
-pre{background:#0d0d14;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:1.2rem 1.4rem;overflow-x:auto;margin:1rem 0 1.5rem;font-size:.78rem;line-height:1.6}
-code{font-family:'SF Mono',Consolas,monospace}
-pre code{color:#c0c0c8}
-.kw{color:#a78bfa}.str{color:#34d399}.cm{color:#555}.fn{color:#4a9eff}.num{color:#fb923c}.op{color:#6e6e80}
-.note{background:rgba(74,158,255,0.06);border-left:3px solid #4a9eff;padding:.8rem 1rem;border-radius:0 8px 8px 0;margin:1rem 0;font-size:.82rem}
-.warn{background:rgba(248,113,113,0.06);border-left:3px solid #f87171;padding:.8rem 1rem;border-radius:0 8px 8px 0;margin:1rem 0;font-size:.82rem}
-footer{text-align:center;padding:3rem 0;font-size:.7rem;color:#6e6e80;border-top:1px solid rgba(255,255,255,0.06);margin-top:3rem}
-</style></head><body><div class="wrap">
-<a href="../index.html#etl" class="back">← Back to Portfolio</a>
-<h1>ETL Pipeline Setup Guide</h1>
-<p class="subtitle">Extract from APIs, databases, and files → S3 staging → AWS Glue transforms → Redshift loading</p>
+:root{--bg:#07090d;--surface:#0d1018;--card:#111520;--border:rgba(255,255,255,0.07);--text:#e8eaf0;--muted:#9ca3af;--accent:#c8a96e;--accent2:#e8c98e;--blue:#60a5fa;--green:#34d399;--dark:#020408}
+html{scroll-behavior:smooth}
+body{font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 3rem;background:rgba(7,9,13,0.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--accent);text-decoration:none}
+.nav-back{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:0.5rem;transition:color 0.3s}
+.nav-back:hover{color:var(--accent)}
+.hero{padding:5rem 3rem 3rem;max-width:900px;margin:0 auto;border-bottom:1px solid var(--border)}
+.hero-tag{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.8rem}
+.hero-tag::before{content:'';width:20px;height:1px;background:var(--accent);opacity:0.5}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:600;color:var(--text);line-height:1.0;letter-spacing:-0.02em;margin-bottom:1rem}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:0.85rem;color:var(--muted);max-width:680px;line-height:1.9;margin-bottom:2rem}
+.stack-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+.stack-tag{font-size:0.65rem;padding:0.3rem 0.8rem;border:1px solid var(--border);color:var(--muted);letter-spacing:0.05em}
+.content{max-width:900px;margin:0 auto;padding:3rem}
+.section{margin-bottom:4rem}
+.section-num{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.8rem}
+.section-num::after{content:'';flex:1;height:1px;background:var(--border)}
+h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--text);margin-bottom:1rem;line-height:1.2}
+h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--accent2);margin:2rem 0 0.8rem}
+p{font-size:0.85rem;color:var(--muted);line-height:1.9;margin-bottom:1rem}
+p strong{color:var(--text);font-weight:500}
+pre{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.5rem;overflow-x:auto;margin:1.5rem 0}
+code{font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--accent2);line-height:1.7}
+pre code{color:#e8eaf0}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:60px 1fr;gap:1.5rem;padding:2rem 0;border-bottom:1px solid var(--border)}
+.step:first-child{border-top:1px solid var(--border)}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:700;color:rgba(255,255,255,0.08);line-height:1;padding-top:0.2rem;transition:color 0.3s}
+.step:hover .step-num{color:var(--accent)}
+.step-content h3{margin-top:0;margin-bottom:0.5rem}
+.arch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border);margin:2rem 0}
+.arch-box{background:var(--surface);padding:1.5rem;text-align:center;transition:background 0.3s}
+.arch-box:hover{background:var(--card)}
+.arch-icon{font-size:1.5rem;margin-bottom:0.5rem}
+.arch-box h4{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.3rem}
+.arch-box p{font-size:0.72rem;color:var(--muted);margin:0;line-height:1.5}
+.info-box{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--blue);padding:1.2rem 1.5rem;margin:1.5rem 0}
+.info-box p{margin:0;font-size:0.8rem}
+.info-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:0.4rem;display:block}
+.warn-box{background:var(--card);border:1px solid var(--border);border-left:3px solid #f59e0b;padding:1.2rem 1.5rem;margin:1.5rem 0}
+.warn-box p{margin:0;font-size:0.8rem}
+.warn-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#f59e0b;margin-bottom:0.4rem;display:block}
+table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.78rem}
+th{text-align:left;padding:0.8rem 1rem;background:var(--card);color:var(--accent);font-weight:500;letter-spacing:0.05em;border-bottom:1px solid var(--border)}
+td{padding:0.75rem 1rem;border-bottom:1px solid rgba(255,255,255,0.04);color:var(--muted);vertical-align:top}
+tr:hover td{background:rgba(255,255,255,0.02);color:var(--text)}
+footer{text-align:center;padding:2rem;font-size:0.65rem;color:var(--muted);border-top:1px solid var(--border);letter-spacing:0.06em;margin-top:4rem}
+@media(max-width:768px){nav{padding:1rem 1.5rem}.hero{padding:3rem 1.5rem 2rem}.content{padding:2rem 1.5rem}.step{grid-template-columns:40px 1fr;gap:1rem}}
 
-<h2>1. Prerequisites</h2>
-<pre><code><span class="cm"># Install AWS CLI</span>
-curl <span class="str">"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"</span> -o awscliv2.zip
-unzip awscliv2.zip && sudo ./aws/install
-aws configure  <span class="cm"># Set access key, secret, region</span>
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.9s cubic-bezier(0.16,1,0.3,1),transform 0.9s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
 
-<span class="cm"># Install Terraform</span>
-wget https://releases.hashicorp.com/terraform/1.7.0/terraform_1.7.0_linux_amd64.zip
-unzip terraform_1.7.0_linux_amd64.zip && sudo mv terraform /usr/local/bin/
+/* SCROLL PROGRESS LINE */
+.scroll-line{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;z-index:200;transition:width 0.1s linear}
 
-<span class="cm"># Python dependencies</span>
-pip install boto3 psycopg2-binary requests paramiko jsonschema</code></pre>
+/* STEP HOVER */
+.step{transition:background 0.3s}
+.step:hover{background:rgba(200,169,110,0.02)}
 
-<h2>2. S3 Bucket Setup</h2>
-<h3>terraform/s3.tf</h3>
-<pre><code><span class="kw">resource</span> <span class="str">"aws_s3_bucket"</span> <span class="str">"raw_data"</span> {
-  bucket = <span class="str">"mycompany-raw-data"</span>
+/* SECTION NUM LINE ANIMATE */
+.section-num::after{transition:width 0.8s ease}
+
+/* HERO ANIMATIONS */
+.hero-tag{animation:fadeSlideUp 0.7s ease forwards}
+.hero h1{animation:fadeSlideUp 0.7s ease 0.15s forwards;opacity:0}
+.hero-sub{animation:fadeSlideUp 0.7s ease 0.3s forwards;opacity:0}
+.stack-tags{animation:fadeSlideUp 0.7s ease 0.45s forwards;opacity:0}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ARCH BOX STAGGER */
+.arch-box{transition:background 0.3s,transform 0.3s}
+.arch-box:hover{transform:translateY(-4px)}
+.arch-box:nth-child(1){animation-delay:0.05s}
+.arch-box:nth-child(2){animation-delay:0.1s}
+.arch-box:nth-child(3){animation-delay:0.15s}
+.arch-box:nth-child(4){animation-delay:0.2s}
+.arch-box:nth-child(5){animation-delay:0.25s}
+
+/* TABLE ROW TRANSITION */
+td{transition:background 0.2s,color 0.2s}
+
+/* CODE BLOCK HOVER */
+pre{transition:border-color 0.3s}
+pre:hover{border-left-color:var(--accent2)}
+
+*::-webkit-scrollbar{display:none}*{scrollbar-width:none;-ms-overflow-style:none}
+
+/* UPGRADED LOG LINES */
+.flow-log{margin-top:1.5rem;background:var(--bg);border:1px solid var(--border);padding:1rem 1.2rem;min-height:72px;font-size:0.72rem;font-family:'DM Mono',monospace;line-height:1;overflow:hidden;position:relative}
+.log-line{display:flex;align-items:center;gap:0.6rem;padding:0.35rem 0;opacity:0;transform:translateX(-10px);animation:logSlide 0.35s ease forwards;border-bottom:1px solid rgba(255,255,255,0.03)}
+.log-line:last-child{border-bottom:none}
+@keyframes logSlide{to{opacity:1;transform:translateX(0)}}
+.log-line::before{content:'>';color:var(--accent);font-size:0.65rem;flex-shrink:0;opacity:0.6}
+.log-line.active{color:var(--accent2)}
+.log-line.active::before{color:var(--accent);animation:blink 0.8s infinite}
+@keyframes blink{0%,100%{opacity:0.6}50%{opacity:1}}
+.log-line.done{color:rgba(200,169,110,0.45)}
+.log-line.success{color:var(--green)}
+.log-line.success::before{content:'✓';color:var(--green)}
+.log-line.error{color:#f87171}
+.log-line.error::before{content:'✗';color:#f87171}
+
+/* UPGRADED BUTTONS */
+.flow-btn{
+  margin-top:1.2rem;
+  padding:0.7rem 2.5rem;
+  background:linear-gradient(135deg,rgba(200,169,110,0.12),rgba(200,169,110,0.05));
+  border:1px solid var(--accent);
+  color:var(--accent);
+  font-family:'DM Mono',monospace;
+  font-size:0.72rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.3s;
+  position:relative;
+  overflow:hidden;
+}
+.flow-btn::before{
+  content:'';
+  position:absolute;
+  top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(200,169,110,0.15),transparent);
+  transition:left 0.5s;
+}
+.flow-btn:hover{
+  background:linear-gradient(135deg,rgba(200,169,110,0.25),rgba(200,169,110,0.1));
+  box-shadow:0 0 24px rgba(200,169,110,0.2),0 0 8px rgba(200,169,110,0.1);
+  letter-spacing:0.2em;
+  color:var(--accent2);
+}
+.flow-btn:hover::before{left:100%}
+.flow-btn:disabled{opacity:0.3;cursor:not-allowed;letter-spacing:0.15em;box-shadow:none}
+.flow-btn:active{transform:scale(0.98)}
+
+/* FLOW NODE pulse when active */
+.flow-node.active{
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px rgba(200,169,110,0.3),0 0 20px rgba(200,169,110,0.15);
+  animation:nodePulse 1s ease infinite;
+}
+@keyframes nodePulse{0%,100%{box-shadow:0 0 0 1px rgba(200,169,110,0.3),0 0 20px rgba(200,169,110,0.15)}50%{box-shadow:0 0 0 3px rgba(200,169,110,0.15),0 0 30px rgba(200,169,110,0.25)}}
+
+/* CHIP styles */
+.batch-job-chip{font-size:0.62rem;padding:0.25rem 0.7rem;border:1px solid var(--border);color:var(--muted);transition:all 0.4s;display:inline-block;margin:2px}
+.batch-job-chip.running{border-color:var(--accent);color:var(--accent);background:rgba(200,169,110,0.08);box-shadow:0 0 8px rgba(200,169,110,0.15)}
+.batch-job-chip.done{border-color:var(--green);color:var(--green);background:rgba(52,211,153,0.08)}
+
+</style>
+</head>
+<body>
+<div class="scroll-line" id="scrollLine"></div>
+<nav>
+  <a href="../index.html" class="nav-logo">SL</a>
+  <a href="../index.html" class="nav-back">← Back to Portfolio</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Infrastructure Tutorial</div>
+  <h1>ETL Pipeline<br><em>Architecture</em></h1>
+  <p class="hero-sub">A production ETL pipeline ingesting data from REST APIs, databases, and flat files — transforming with AWS Glue PySpark — loading into Redshift. Includes error handling, data quality checks, and monitoring.</p>
+  <div class="stack-tags">
+    <span class="stack-tag">AWS Glue</span>
+    <span class="stack-tag">PySpark</span>
+    <span class="stack-tag">S3</span>
+    <span class="stack-tag">Redshift</span>
+    <span class="stack-tag">Lambda</span>
+    <span class="stack-tag">Step Functions</span>
+    <span class="stack-tag">CloudWatch</span>
+    <span class="stack-tag">SNS</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="section reveal">
+    <div class="section-num">Overview</div>
+    <h2>Pipeline Architecture</h2>
+    <p>The pipeline follows a classic <strong>medallion architecture</strong> — raw data lands in a Bronze S3 layer, Glue transforms it to Silver, and final aggregations produce Gold data ready for analytics in Redshift.</p>
+
+    <div class="arch-grid reveal">
+      <div class="arch-box"><h4>Ingestion</h4><p>Lambda pulls from REST APIs, JDBC sources, and S3 file drops into Bronze layer.</p></div>
+      <div class="arch-box"><h4>Transform</h4><p>Glue PySpark jobs clean, validate, deduplicate, and enrich data into Silver layer.</p></div>
+      <div class="arch-box"><h4>Aggregate</h4><p>Glue jobs compute business metrics and KPIs into Gold layer tables.</p></div>
+      <div class="arch-box"><h4>Load</h4><p>Redshift COPY command loads Gold data. BI tools query Redshift directly.</p></div>
+    </div>
+  </div>
+
+  <div class="section reveal">
+    
+  
+  <div class="section reveal">
+    <div class="section-num">Live Flow</div>
+    <h2>Data Flow Animation</h2>
+    <p>Raw records move through the medallion layers — Bronze ingestion, Silver cleaning, Gold aggregation, Redshift load.</p>
+
+<style>
+/* SVG PIPELINE */
+.pipeline-wrap{background:var(--card);border:1px solid var(--border);padding:2rem 1.5rem;margin:1.5rem 0;overflow:hidden}
+.pipeline-svg-wrap{width:100%;overflow:hidden}
+.pipeline-svg-wrap svg{width:100%;height:auto;display:block}
+.pipeline-stages{display:flex;gap:6px;flex-wrap:wrap;margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.p-chip{font-size:0.62rem;letter-spacing:0.06em;padding:0.3rem 0.9rem;border:1px solid var(--border);color:var(--muted);transition:all 0.5s;position:relative;overflow:hidden}
+.p-chip::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(200,169,110,0.15),transparent);transform:translateX(-100%)}
+.p-chip.running{border-color:var(--accent);color:var(--accent);background:rgba(200,169,110,0.06)}
+.p-chip.running::after{animation:chipShimmer 1s ease infinite}
+@keyframes chipShimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.p-chip.done{border-color:var(--green);color:var(--green);background:rgba(52,211,153,0.06)}
+.micro-log-wrap{margin-top:1.2rem}
+</style>
+
+<div class="pipeline-wrap">
+  <div class="pipeline-svg-wrap">
+    <svg viewBox="0 0 860 130" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="pGrad"><stop offset="0%" stop-color="#e8c98e"/><stop offset="100%" stop-color="#c8a96e"/></radialGradient>
+        <filter id="gGold"><feGaussianBlur stdDeviation="3" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+        <filter id="gGreen"><feGaussianBlur stdDeviation="3" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+      </defs>
+      <line id="e1_bg" x1="130" y1="58" x2="200" y2="58" stroke="rgba(200,169,110,0.12)" stroke-width="1" stroke-dasharray="4 3"/>
+      <line id="e1_a"  x1="130" y1="58" x2="130" y2="58" stroke="#c8a96e" stroke-width="1.5" opacity="0"/>
+      <text x="165" y="50" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(200,169,110,0.4)">JSON</text>
+
+      <line id="e2_bg" x1="350" y1="58" x2="420" y2="58" stroke="rgba(200,169,110,0.12)" stroke-width="1" stroke-dasharray="4 3"/>
+      <line id="e2_a"  x1="350" y1="58" x2="350" y2="58" stroke="#c8a96e" stroke-width="1.5" opacity="0"/>
+      <text x="385" y="50" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(200,169,110,0.4)">GLUE</text>
+
+      <line id="e3_bg" x1="570" y1="58" x2="640" y2="58" stroke="rgba(200,169,110,0.12)" stroke-width="1" stroke-dasharray="4 3"/>
+      <line id="e3_a"  x1="570" y1="58" x2="570" y2="58" stroke="#c8a96e" stroke-width="1.5" opacity="0"/>
+      <text x="605" y="50" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(200,169,110,0.4)">GLUE</text>
+
+      <line id="e4_bg" x1="790" y1="58" x2="820" y2="58" stroke="rgba(200,169,110,0.12)" stroke-width="1" stroke-dasharray="4 3"/>
+      <line id="e4_a"  x1="790" y1="58" x2="790" y2="58" stroke="#c8a96e" stroke-width="1.5" opacity="0"/>
+      <text x="800" y="50" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(200,169,110,0.4)">COPY</text>
+
+      <!-- Quarantine branch -->
+      <line id="e_q_bg" x1="275" y1="90" x2="275" y2="108" stroke="rgba(248,113,113,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+      <line id="e_q_a"  x1="275" y1="90" x2="275" y2="90" stroke="#f87171" stroke-width="1.5" opacity="0"/>
+
+      <g id="n-api" opacity="0.45" style="cursor:default">
+        <rect x="10" y="26" width="120" height="64" rx="2" fill="#0d1018" stroke="rgba(200,169,110,0.18)" stroke-width="1"/>
+        <text x="70" y="52" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#e8eaf0" font-weight="600">Lambda</text>
+        <text x="70" y="66" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(156,163,175,0.8)">API Extractor</text>
+        <rect x="18" y="74" width="104" height="1" fill="rgba(200,169,110,0.1)"/>
+        <text x="70" y="85" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(200,169,110,0.35)" letter-spacing="0.5">INGEST</text>
+      </g>
+      <g id="n-bronze" opacity="0.45" style="cursor:default">
+        <rect x="200" y="26" width="150" height="64" rx="2" fill="#0d1018" stroke="rgba(200,169,110,0.18)" stroke-width="1"/>
+        <text x="275" y="52" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#e8eaf0" font-weight="600">S3 Bronze</text>
+        <text x="275" y="66" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(156,163,175,0.8)">Raw JSON</text>
+        <rect x="208" y="74" width="134" height="1" fill="rgba(200,169,110,0.1)"/>
+        <text x="275" y="85" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(200,169,110,0.35)" letter-spacing="0.5">LAYER 1</text>
+      </g>
+      <g id="n-silver" opacity="0.45" style="cursor:default">
+        <rect x="420" y="26" width="150" height="64" rx="2" fill="#0d1018" stroke="rgba(200,169,110,0.18)" stroke-width="1"/>
+        <text x="495" y="52" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#e8eaf0" font-weight="600">S3 Silver</text>
+        <text x="495" y="66" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(156,163,175,0.8)">Clean Parquet</text>
+        <rect x="428" y="74" width="134" height="1" fill="rgba(200,169,110,0.1)"/>
+        <text x="495" y="85" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(200,169,110,0.35)" letter-spacing="0.5">LAYER 2</text>
+      </g>
+      <g id="n-gold" opacity="0.45" style="cursor:default">
+        <rect x="640" y="26" width="150" height="64" rx="2" fill="#0d1018" stroke="rgba(200,169,110,0.18)" stroke-width="1"/>
+        <text x="715" y="52" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#e8eaf0" font-weight="600">S3 Gold</text>
+        <text x="715" y="66" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(156,163,175,0.8)">Aggregated</text>
+        <rect x="648" y="74" width="134" height="1" fill="rgba(200,169,110,0.1)"/>
+        <text x="715" y="85" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(200,169,110,0.35)" letter-spacing="0.5">LAYER 3</text>
+      </g>
+      <g id="n-rs" opacity="0.45" style="cursor:default">
+        <rect x="800" y="26" width="54" height="64" rx="2" fill="#0d1018" stroke="rgba(200,169,110,0.18)" stroke-width="1"/>
+        <text x="827" y="52" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#e8eaf0" font-weight="600">Redshift</text>
+        <text x="827" y="66" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(156,163,175,0.8)">Analytics</text>
+        <rect x="808" y="74" width="38" height="1" fill="rgba(200,169,110,0.1)"/>
+        <text x="827" y="85" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(200,169,110,0.35)" letter-spacing="0.5">DW</text>
+      </g>
+
+      <!-- Quarantine node -->
+      <g id="n-quarantine" opacity="0.3">
+        <rect x="200" y="108" width="150" height="22" rx="2" fill="#0d1018" stroke="rgba(248,113,113,0.3)" stroke-width="1"/>
+        <text x="275" y="123" text-anchor="middle" font-family="DM Mono,monospace" font-size="7.5" fill="rgba(248,113,113,0.7)">S3 Quarantine (rejected)</text>
+      </g>
+
+      <!-- Stats -->
+      <text id="stat-extracted" x="10" y="120" font-family="DM Mono,monospace" font-size="7" fill="rgba(200,169,110,0)" opacity="0"/>
+      <text id="stat-clean"     x="420" y="120" font-family="DM Mono,monospace" font-size="7" fill="rgba(52,211,153,0)" opacity="0"/>
+      <text id="stat-agg"       x="640" y="120" font-family="DM Mono,monospace" font-size="7" fill="rgba(52,211,153,0)" opacity="0"/>
+
+      <circle id="ep1" cx="130" cy="58" r="5" fill="url(#pGrad)" opacity="0" filter="url(#gGold)"/>
+      <circle id="ep2" cx="350" cy="58" r="5" fill="url(#pGrad)" opacity="0" filter="url(#gGold)"/>
+      <circle id="ep3" cx="570" cy="58" r="5" fill="url(#pGrad)" opacity="0" filter="url(#gGold)"/>
+      <circle id="ep4" cx="790" cy="58" r="5" fill="url(#pGrad)" opacity="0" filter="url(#gGold)"/>
+      <circle id="ep_q" cx="275" cy="90" r="4" fill="url(#pGrad)" opacity="0" filter="url(#gGold)"/>
+
+    </svg>
+  </div>
+  <div class="micro-log-wrap">
+    <div class="flow-log" id="etl-log"><span class="log-line">Waiting for pipeline run...</span></div>
+  </div>
+</div>
+<button class="flow-btn" onclick="runETLFlow()">Run Pipeline</button>
+
+<script>
+
+function addLogLine(logEl, msg, type) {
+  type = type || 'active';
+  var prev = logEl.querySelectorAll('.log-line.active');
+  for (var i = 0; i < prev.length; i++) { prev[i].classList.remove('active'); prev[i].classList.add('done'); }
+  var line = document.createElement('span');
+  line.className = 'log-line ' + type;
+  line.style.animationName = 'none';
+  line.textContent = msg;
+  logEl.appendChild(line);
+  requestAnimationFrame(function() { line.style.animationName = ''; });
+  logEl.scrollTop = logEl.scrollHeight;
 }
 
-<span class="kw">resource</span> <span class="str">"aws_s3_bucket_versioning"</span> <span class="str">"raw_versioning"</span> {
-  bucket = aws_s3_bucket.raw_data.id
-  versioning_configuration { status = <span class="str">"Enabled"</span> }
-}
 
-<span class="kw">resource</span> <span class="str">"aws_s3_bucket_lifecycle_configuration"</span> <span class="str">"raw_lifecycle"</span> {
-  bucket = aws_s3_bucket.raw_data.id
-  rule {
-    id     = <span class="str">"archive-old"</span>
-    status = <span class="str">"Enabled"</span>
-    transition {
-      days          = <span class="num">90</span>
-      storage_class = <span class="str">"GLACIER"</span>
-    }
-    expiration { days = <span class="num">365</span> }
+function svgActivate(id, color) {
+  const g = document.getElementById(id);
+  if (!g) return;
+  g.style.opacity = '1';
+  const rect = g.querySelector('rect');
+  if (rect) {
+    rect.setAttribute('stroke', color || '#c8a96e');
+    rect.setAttribute('stroke-width', '1.5');
+    rect.style.filter = 'drop-shadow(0 0 8px rgba(200,169,110,0.35))';
   }
 }
-
-<span class="kw">resource</span> <span class="str">"aws_s3_bucket"</span> <span class="str">"processed"</span> {
-  bucket = <span class="str">"mycompany-processed-data"</span>
+function svgDone(id, color) {
+  const g = document.getElementById(id);
+  if (!g) return;
+  g.style.opacity = '1';
+  const rect = g.querySelector('rect');
+  if (rect) {
+    rect.setAttribute('stroke', color || '#34d399');
+    rect.setAttribute('stroke-width', '1.5');
+    rect.style.filter = 'drop-shadow(0 0 6px rgba(52,211,153,0.3))';
+  }
 }
+function svgReset(id) {
+  const g = document.getElementById(id);
+  if (!g) return;
+  g.style.opacity = '0.45';
+  const rect = g.querySelector('rect');
+  if (rect) { rect.setAttribute('stroke','rgba(200,169,110,0.18)'); rect.setAttribute('stroke-width','1'); rect.style.filter=''; }
+}
+function svgAnimLine(lineId, x1, x2, dur, cb) {
+  const l = document.getElementById(lineId);
+  if (!l) { if(typeof cb==="function") cb(); return; }
+  l.setAttribute('opacity','1');
+  l.setAttribute('x2', x1);
+  let start = null;
+  (function _step1(ts) {
+    if (!start) start = ts;
+    const p = Math.min((ts - start) / (dur||500), 1);
+    l.setAttribute('x2', x1 + (x2 - x1) * p);
+    if (p < 1) requestAnimationFrame(_step1);
+    else if (typeof cb === "function") cb();
+  })(performance.now());
+}
+function svgAnimPacket(pktId, x1, x2, y, dur, cb) {
+  const pkt = document.getElementById(pktId);
+  if (!pkt) { if(typeof cb==="function") cb(); return; }
+  pkt.setAttribute('cx', x1); pkt.setAttribute('cy', y||60);
+  pkt.setAttribute('opacity','1');
+  let start = null;
+  (function _step2(ts) {
+    if (!start) start = ts;
+    const p = Math.min((ts - start) / (dur||600), 1);
+    const ease = 1 - Math.pow(1 - p, 2);
+    pkt.setAttribute('cx', x1 + (x2 - x1) * ease);
+    pkt.setAttribute('opacity', p > 0.85 ? String(1 - (p - 0.85) * 6.67) : '1');
+    if (p < 1) requestAnimationFrame(_step2);
+    else { pkt.setAttribute('opacity','0'); if(typeof cb==="function") cb(); }
+  })(performance.now());
+}
+function svgT(ms, fn) { return setTimeout(fn, ms); }
 
-<span class="kw">resource</span> <span class="str">"aws_s3_bucket"</span> <span class="str">"quarantine"</span> {
-  bucket = <span class="str">"mycompany-quarantine"</span>
-}</code></pre>
+function svgAnimLineV2(id, y1, y2, dur, cb) {
+  const l=document.getElementById(id); if(!l){if(typeof cb==="function")cb();return;}
+  l.setAttribute('opacity','1'); l.setAttribute('y2',y1);
+  let start=null;
+  (function _step3(ts){
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/(dur||400),1);
+    l.setAttribute('y2',y1+(y2-y1)*p);
+    if(p<1)requestAnimationFrame(_step3); else if(typeof cb==="function")cb();
+  })(performance.now());
+}
+function showStat(id, val) {
+  const el=document.getElementById(id); if(!el)return;
+  el.textContent=val; el.setAttribute('opacity','1');
+  el.setAttribute('fill','rgba(200,169,110,0.7)');
+}
+function runETLFlow() {
+  const btn=document.querySelector('[onclick="runETLFlow()"]');
+  if(btn) btn.disabled=true;
+  const log=document.getElementById('etl-log');
+  log.innerHTML='';
+  ['n-api','n-bronze','n-silver','n-gold','n-rs','n-quarantine'].forEach(id=>svgReset(id));
+  ['e1_a','e2_a','e3_a','e4_a','e_q_a'].forEach(id=>{ const l=document.getElementById(id); if(l){l.setAttribute('opacity','0'); l.setAttribute('x2',l.getAttribute('x1')||'0'); l.setAttribute('y2',l.getAttribute('y1')||'0');} });
+  ['stat-extracted','stat-clean','stat-agg'].forEach(id=>{ const e=document.getElementById(id); if(e)e.setAttribute('opacity','0'); });
 
-<h2>3. Data Extraction Scripts</h2>
-<h3>extract/api_extractor.py — Pull from REST APIs</h3>
-<pre><code><span class="kw">import</span> requests, boto3, json
-<span class="kw">from</span> datetime <span class="kw">import</span> datetime
-<span class="kw">from</span> time <span class="kw">import</span> sleep
+  svgT(0,   ()=>{ svgActivate('n-api'); addLogLine(log,'Lambda invokes REST API — pulling orders...'); });
+  svgT(800, ()=>{ svgAnimLine('e1_a',130,200,400); svgAnimPacket('ep1',130,200,58,450); });
+  svgT(1300,()=>{ svgDone('n-api'); svgActivate('n-bronze'); showStat('stat-extracted','50,000 records extracted'); addLogLine(log,'50,000 records written to S3 Bronze (raw JSON)'); });
+  svgT(2100,()=>{ svgAnimLine('e2_a',350,420,400); svgAnimPacket('ep2',350,420,58,450); });
+  svgT(2600,()=>{ svgActivate('n-silver'); addLogLine(log,'Glue PySpark: validating, deduplicating...'); });
+  svgT(3300,()=>{ svgAnimLineV2('e_q_a',90,108,350); svgAnimPacket('ep_q',275,275,90,200); });
+  svgT(3600,()=>{ svgActivate('n-quarantine'); addLogLine(log,'312 records failed quality checks — quarantined'); });
+  svgT(4300,()=>{ svgDone('n-bronze'); svgDone('n-silver'); showStat('stat-clean','49,688 clean rows → Parquet'); addLogLine(log,'49,688 clean records written to S3 Silver (Parquet)'); });
+  svgT(5100,()=>{ svgAnimLine('e3_a',570,640,400); svgAnimPacket('ep3',570,640,58,450); });
+  svgT(5600,()=>{ svgActivate('n-gold'); addLogLine(log,'Glue aggregation: computing daily revenue by region'); });
+  svgT(6400,()=>{ svgDone('n-silver'); svgDone('n-gold'); showStat('stat-agg','24 aggregate rows'); addLogLine(log,'24 aggregate rows written to S3 Gold'); });
+  svgT(7200,()=>{ svgAnimLine('e4_a',790,854,400); svgAnimPacket('ep4',790,854,58,450); });
+  svgT(7700,()=>{ svgActivate('n-rs'); addLogLine(log,'Redshift COPY from S3 — parallel load across 8 slices'); });
+  svgT(8400,()=>{ svgDone('n-gold'); svgDone('n-rs'); addLogLine(log,'Pipeline complete — 49,688 rows loaded in 4m 12s','success'); if(btn) btn.disabled=false; });
+}
+</script>
+  </div>
 
-s3 = boto3.client(<span class="str">'s3'</span>)
-BUCKET = <span class="str">'mycompany-raw-data'</span>
-TODAY = datetime.now().strftime(<span class="str">'%Y/%m/%d'</span>)
 
-ENDPOINTS = [
-    {<span class="str">'name'</span>: <span class="str">'users'</span>,    <span class="str">'url'</span>: <span class="str">'https://api.example.com/v1/users'</span>},
-    {<span class="str">'name'</span>: <span class="str">'orders'</span>,   <span class="str">'url'</span>: <span class="str">'https://api.example.com/v1/orders'</span>},
-    {<span class="str">'name'</span>: <span class="str">'products'</span>, <span class="str">'url'</span>: <span class="str">'https://api.example.com/v1/products'</span>},
-]
+    <h2>Build Guide</h2>
+    <div class="steps reveal">
 
-<span class="kw">def</span> <span class="fn">extract_api</span>(endpoint):
-    all_data = []
-    page = <span class="num">1</span>
-    <span class="kw">while True</span>:
-        <span class="kw">for</span> attempt <span class="kw">in</span> range(<span class="num">3</span>):  <span class="cm"># retry logic</span>
-            <span class="kw">try</span>:
-                resp = requests.get(
-                    endpoint[<span class="str">'url'</span>],
-                    params={<span class="str">'page'</span>: page, <span class="str">'per_page'</span>: <span class="num">100</span>},
-                    timeout=<span class="num">30</span>
-                )
-                resp.raise_for_status()
-                <span class="kw">break</span>
-            <span class="kw">except</span> requests.RequestException:
-                sleep(<span class="num">2</span> ** attempt)
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>S3 Bucket Structure — Medallion Layers</h3>
+          <p>Create three S3 buckets or prefixes for the Bronze, Silver, and Gold layers. Use separate buckets per environment and enable versioning on all layers.</p>
+          <pre><code># Create S3 buckets for each layer
+aws s3api create-bucket --bucket prod-datalake-bronze --region us-east-1
+aws s3api create-bucket --bucket prod-datalake-silver --region us-east-1
+aws s3api create-bucket --bucket prod-datalake-gold --region us-east-1
+
+# Enable versioning — important for reprocessing
+aws s3api put-bucket-versioning \
+  --bucket prod-datalake-bronze \
+  --versioning-configuration Status=Enabled
+
+# Lifecycle policy — move bronze to Glacier after 90 days
+aws s3api put-bucket-lifecycle-configuration \
+  --bucket prod-datalake-bronze \
+  --lifecycle-configuration '{
+    "Rules": [{
+      "Id": "archive-raw",
+      "Status": "Enabled",
+      "Transitions": [{"Days": 90, "StorageClass": "GLACIER"}],
+      "Filter": {"Prefix": ""}
+    }]
+  }'</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Lambda Ingestion — REST API Source</h3>
+          <p>Lambda functions run on a schedule to pull data from source systems and land it in the Bronze S3 layer. Each source gets its own Lambda to fail independently.</p>
+          <pre><code>import boto3
+import requests
+import json
+from datetime import datetime
+
+s3 = boto3.client('s3')
+BUCKET = 'prod-datalake-bronze'
+
+def handler(event, context):
+    # Build partition path by date
+    today = datetime.utcnow()
+    prefix = f"api/orders/year={today.year}/month={today.month:02d}/day={today.day:02d}/"
+
+    # Pull from source API with pagination
+    page = 1
+    records = []
+    while True:
+        resp = requests.get(
+            'https://api.source.com/orders',
+            params={'page': page, 'limit': 1000},
+            headers={'Authorization': f"Bearer {get_secret('api-key')}"},
+            timeout=30
+        )
+        resp.raise_for_status()
         data = resp.json()
-        <span class="kw">if not</span> data[<span class="str">'results'</span>]: <span class="kw">break</span>
-        all_data.extend(data[<span class="str">'results'</span>])
-        page += <span class="num">1</span>
+        records.extend(data['items'])
 
-    key = <span class="str">f"api/<span class="op">{</span>TODAY<span class="op">}</span>/<span class="op">{</span>endpoint['name']<span class="op">}</span>.json"</span>
-    s3.put_object(Bucket=BUCKET, Key=key, Body=json.dumps(all_data))
-    <span class="kw">print</span>(<span class="str">f"Uploaded <span class="op">{</span>len(all_data)<span class="op">}</span> records to <span class="op">{</span>key<span class="op">}</span>"</span>)
+        if not data.get('next_page'):
+            break
+        page += 1
 
-<span class="kw">for</span> ep <span class="kw">in</span> ENDPOINTS:
-    extract_api(ep)</code></pre>
+    # Write as newline-delimited JSON to S3
+    filename = f"{prefix}orders_{today.strftime('%H%M%S')}.json"
+    body = '\n'.join(json.dumps(r) for r in records)
+    s3.put_object(Bucket=BUCKET, Key=filename, Body=body)
 
-<h3>extract/db_extractor.py — Incremental PostgreSQL Extraction</h3>
-<pre><code><span class="kw">import</span> psycopg2, boto3, csv, io
-<span class="kw">from</span> datetime <span class="kw">import</span> datetime
+    print(f"Ingested {len(records)} records to s3://{BUCKET}/{filename}")
+    return {'records': len(records), 'path': filename}</code></pre>
+        </div>
+      </div>
 
-s3 = boto3.client(<span class="str">'s3'</span>)
-TODAY = datetime.now().strftime(<span class="str">'%Y/%m/%d'</span>)
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>AWS Glue Job — Bronze to Silver Transform</h3>
+          <p>The Glue PySpark job reads raw Bronze data, applies data quality checks, cleans nulls, deduplicates, and writes clean Parquet to the Silver layer.</p>
+          <pre><code">import sys
+from awsglue.transforms import *
+from awsglue.utils import getResolvedOptions
+from pyspark.context import SparkContext
+from awsglue.context import GlueContext
+from awsglue.job import Job
+from pyspark.sql import functions as F
+from pyspark.sql.types import TimestampType
 
-conn = psycopg2.connect(
-    host=<span class="str">"source-db.example.com"</span>, dbname=<span class="str">"production"</span>,
-    user=<span class="str">"etl_reader"</span>, password=<span class="str">"from-secrets-manager"</span>
-)
-
-<span class="cm"># Get last extraction timestamp from SSM Parameter Store</span>
-ssm = boto3.client(<span class="str">'ssm'</span>)
-last_run = ssm.get_parameter(Name=<span class="str">'/etl/last_extract_ts'</span>)[<span class="str">'Parameter'</span>][<span class="str">'Value'</span>]
-
-<span class="kw">with</span> conn.cursor() <span class="kw">as</span> cur:
-    cur.execute(<span class="str">"""
-        SELECT id, name, email, updated_at
-        FROM users WHERE updated_at > %s
-        ORDER BY updated_at
-    """</span>, (last_run,))
-    rows = cur.fetchall()
-
-<span class="cm"># Write to CSV in memory and upload</span>
-buf = io.StringIO()
-writer = csv.writer(buf)
-writer.writerow([<span class="str">'id'</span>, <span class="str">'name'</span>, <span class="str">'email'</span>, <span class="str">'updated_at'</span>])
-writer.writerows(rows)
-
-s3.put_object(
-    Bucket=<span class="str">'mycompany-raw-data'</span>,
-    Key=<span class="str">f"db/<span class="op">{</span>TODAY<span class="op">}</span>/users.csv"</span>,
-    Body=buf.getvalue()
-)
-
-<span class="cm"># Update watermark</span>
-ssm.put_parameter(Name=<span class="str">'/etl/last_extract_ts'</span>,
-    Value=datetime.now().isoformat(), Overwrite=<span class="kw">True</span>)
-<span class="kw">print</span>(<span class="str">f"Extracted <span class="op">{</span>len(rows)<span class="op">}</span> rows"</span>)</code></pre>
-
-<h2>4. Schema Validation</h2>
-<h3>validate/schema_check.py</h3>
-<pre><code><span class="kw">import</span> json, boto3
-<span class="kw">from</span> jsonschema <span class="kw">import</span> validate, ValidationError
-
-USER_SCHEMA = {
-    <span class="str">"type"</span>: <span class="str">"object"</span>,
-    <span class="str">"required"</span>: [<span class="str">"id"</span>, <span class="str">"name"</span>, <span class="str">"email"</span>],
-    <span class="str">"properties"</span>: {
-        <span class="str">"id"</span>:    {<span class="str">"type"</span>: <span class="str">"integer"</span>},
-        <span class="str">"name"</span>:  {<span class="str">"type"</span>: <span class="str">"string"</span>, <span class="str">"minLength"</span>: <span class="num">1</span>},
-        <span class="str">"email"</span>: {<span class="str">"type"</span>: <span class="str">"string"</span>, <span class="str">"format"</span>: <span class="str">"email"</span>},
-    }
-}
-
-<span class="kw">def</span> <span class="fn">validate_records</span>(records, schema):
-    valid, invalid = [], []
-    <span class="kw">for</span> r <span class="kw">in</span> records:
-        <span class="kw">try</span>:
-            validate(instance=r, schema=schema)
-            valid.append(r)
-        <span class="kw">except</span> ValidationError:
-            invalid.append(r)
-    <span class="kw">return</span> valid, invalid
-
-<span class="cm"># Upload invalid records to quarantine bucket</span>
-s3 = boto3.client(<span class="str">'s3'</span>)
-<span class="kw">if</span> invalid:
-    s3.put_object(Bucket=<span class="str">'mycompany-quarantine'</span>,
-        Key=<span class="str">f"users/<span class="op">{</span>TODAY<span class="op">}</span>/rejected.json"</span>,
-        Body=json.dumps(invalid))</code></pre>
-
-<h2>5. AWS Glue Job</h2>
-<h3>terraform/glue.tf</h3>
-<pre><code><span class="kw">resource</span> <span class="str">"aws_glue_catalog_database"</span> <span class="str">"etl_db"</span> {
-  name = <span class="str">"etl_catalog"</span>
-}
-
-<span class="kw">resource</span> <span class="str">"aws_glue_job"</span> <span class="str">"transform"</span> {
-  name     = <span class="str">"daily-transform"</span>
-  role_arn = aws_iam_role.glue_role.arn
-
-  command {
-    script_location = <span class="str">"s3://mycompany-glue-scripts/transform.py"</span>
-    python_version  = <span class="str">"3"</span>
-  }
-
-  default_arguments = {
-    <span class="str">"--job-bookmark-option"</span> = <span class="str">"job-bookmark-enable"</span>
-    <span class="str">"--TempDir"</span>             = <span class="str">"s3://mycompany-glue-temp/"</span>
-    <span class="str">"--source_bucket"</span>       = <span class="str">"mycompany-raw-data"</span>
-    <span class="str">"--dest_bucket"</span>         = <span class="str">"mycompany-processed-data"</span>
-  }
-
-  max_retries       = <span class="num">1</span>
-  timeout           = <span class="num">60</span>
-  number_of_workers = <span class="num">4</span>
-  worker_type       = <span class="str">"G.1X"</span>
-}</code></pre>
-
-<h3>glue/transform.py — PySpark Glue Script</h3>
-<pre><code><span class="kw">import</span> sys
-<span class="kw">from</span> awsglue.transforms <span class="kw">import</span> *
-<span class="kw">from</span> awsglue.utils <span class="kw">import</span> getResolvedOptions
-<span class="kw">from</span> pyspark.context <span class="kw">import</span> SparkContext
-<span class="kw">from</span> awsglue.context <span class="kw">import</span> GlueContext
-<span class="kw">from</span> awsglue.job <span class="kw">import</span> Job
-<span class="kw">from</span> pyspark.sql.functions <span class="kw">import</span> col, sha2, concat_ws, count
-
-args = getResolvedOptions(sys.argv, [<span class="str">'JOB_NAME'</span>, <span class="str">'source_bucket'</span>, <span class="str">'dest_bucket'</span>])
+args = getResolvedOptions(sys.argv, ['JOB_NAME', 'source_path', 'target_path'])
 sc = SparkContext()
 glueContext = GlueContext(sc)
 spark = glueContext.spark_session
 job = Job(glueContext)
-job.init(args[<span class="str">'JOB_NAME'</span>], args)
+job.init(args['JOB_NAME'], args)
 
-<span class="cm"># 1. Read raw data from S3</span>
-df = spark.read.json(<span class="str">f"s3://<span class="op">{</span>args['source_bucket']<span class="op">}</span>/api/*/*.json"</span>)
+# Read Bronze layer
+df = spark.read.json(args['source_path'])
 
-<span class="cm"># 2. Clean: drop nulls, cast types</span>
-df_clean = df.dropna(subset=[<span class="str">"id"</span>, <span class="str">"email"</span>]) \
-    .withColumn(<span class="str">"id"</span>, col(<span class="str">"id"</span>).cast(<span class="str">"long"</span>))
+print(f"Raw record count: {df.count()}")
 
-<span class="cm"># 3. Deduplicate using hash</span>
-df_dedup = df_clean.withColumn(
-    <span class="str">"row_hash"</span>, sha2(concat_ws(<span class="str">"||"</span>, *df_clean.columns), <span class="num">256</span>)
-).dropDuplicates([<span class="str">"row_hash"</span>]).drop(<span class="str">"row_hash"</span>)
-
-<span class="cm"># 4. Aggregate: daily counts per user</span>
-df_agg = df_dedup.groupBy(<span class="str">"user_id"</span>).agg(count(<span class="str">"*"</span>).alias(<span class="str">"daily_count"</span>))
-
-<span class="cm"># 5. Write to processed bucket as Parquet</span>
-df_dedup.write.mode(<span class="str">"overwrite"</span>).parquet(
-    <span class="str">f"s3://<span class="op">{</span>args['dest_bucket']<span class="op">}</span>/cleaned/"</span>
+# Data quality checks
+df_clean = df.filter(
+    F.col('order_id').isNotNull() &
+    F.col('customer_id').isNotNull() &
+    F.col('amount').isNotNull() &
+    (F.col('amount') > 0)  # Business rule: no zero-value orders
 )
-df_agg.write.mode(<span class="str">"overwrite"</span>).parquet(
-    <span class="str">f"s3://<span class="op">{</span>args['dest_bucket']<span class="op">}</span>/aggregated/"</span>
-)
+
+rejected = df.count() - df_clean.count()
+print(f"Rejected {rejected} records failing quality checks")
+
+# Standardize and enrich
+df_silver = df_clean \
+    .withColumn('created_at', F.to_timestamp('created_at')) \
+    .withColumn('amount', F.col('amount').cast('decimal(18,2)')) \
+    .withColumn('status', F.upper(F.trim(F.col('status')))) \
+    .withColumn('year', F.year('created_at')) \
+    .withColumn('month', F.month('created_at')) \
+    .withColumn('day', F.dayofmonth('created_at')) \
+    .dropDuplicates(['order_id'])  # Deduplicate by business key
+
+# Write partitioned Parquet to Silver
+df_silver.write \
+    .mode('overwrite') \
+    .partitionBy('year', 'month', 'day') \
+    .parquet(args['target_path'])
+
+print(f"Silver record count: {df_silver.count()}")
 job.commit()</code></pre>
+        </div>
+      </div>
 
-<h2>6. Loading to Redshift</h2>
-<h3>load/redshift_copy.py</h3>
-<pre><code><span class="kw">import</span> psycopg2
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>AWS Glue Job — Silver to Gold Aggregation</h3>
+          <p>The Gold layer job computes business-ready aggregations — daily revenue, order counts by region, customer lifetime value — that BI tools query directly.</p>
+          <pre><code">from pyspark.sql import functions as F
 
-conn = psycopg2.connect(
-    host=<span class="str">"my-cluster.xxxxx.redshift.amazonaws.com"</span>,
-    dbname=<span class="str">"warehouse"</span>, user=<span class="str">"etl_loader"</span>,
-    password=<span class="str">"from-secrets-manager"</span>, port=<span class="num">5439</span>
+# Read Silver
+orders = spark.read.parquet(args['silver_orders'])
+customers = spark.read.parquet(args['silver_customers'])
+
+# Join and compute daily revenue metrics
+daily_revenue = orders \
+    .join(customers, 'customer_id', 'left') \
+    .filter(F.col('status') == 'COMPLETED') \
+    .groupBy('year', 'month', 'day', 'region', 'product_category') \
+    .agg(
+        F.count('order_id').alias('order_count'),
+        F.sum('amount').alias('gross_revenue'),
+        F.avg('amount').alias('avg_order_value'),
+        F.countDistinct('customer_id').alias('unique_customers'),
+        F.sum(
+            F.when(F.col('is_new_customer'), F.col('amount'))
+        ).alias('new_customer_revenue')
+    )
+
+# Write to Gold
+daily_revenue.write \
+    .mode('overwrite') \
+    .partitionBy('year', 'month', 'day') \
+    .parquet(args['gold_path'])</code></pre>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <h3>Load to Redshift</h3>
+          <p>Use the Redshift <code>COPY</code> command — it loads in parallel from S3 and is 100x faster than INSERT statements. Always use an IAM role, never credentials in the query.</p>
+          <pre><code">-- Create target table in Redshift
+CREATE TABLE analytics.daily_revenue (
+    year         INTEGER,
+    month        INTEGER,
+    day          INTEGER,
+    region       VARCHAR(50),
+    product_category VARCHAR(100),
+    order_count  INTEGER,
+    gross_revenue DECIMAL(18,2),
+    avg_order_value DECIMAL(18,2),
+    unique_customers INTEGER,
+    new_customer_revenue DECIMAL(18,2)
 )
+DISTKEY(region)
+SORTKEY(year, month, day);
 
-<span class="kw">with</span> conn.cursor() <span class="kw">as</span> cur:
-    cur.execute(<span class="str">"""
-        COPY users_staging
-        FROM 's3://mycompany-processed-data/cleaned/'
-        IAM_ROLE 'arn:aws:iam::123456789:role/RedshiftS3ReadRole'
-        FORMAT AS PARQUET;
-    """</span>)
+-- Load from S3 using COPY
+COPY analytics.daily_revenue
+FROM 's3://prod-datalake-gold/daily-revenue/'
+IAM_ROLE 'arn:aws:iam::123456789:role/RedshiftS3Role'
+FORMAT AS PARQUET
+SERIALIZETOJSON;
 
-    <span class="cm"># Merge into final table (upsert)</span>
-    cur.execute(<span class="str">"""
-        BEGIN TRANSACTION;
-        DELETE FROM users WHERE id IN (SELECT id FROM users_staging);
-        INSERT INTO users SELECT * FROM users_staging;
-        TRUNCATE users_staging;
-        COMMIT;
-    """</span>)
+-- Verify load
+SELECT COUNT(*), MAX(year || '-' || month || '-' || day)
+FROM analytics.daily_revenue;</code></pre>
+          <div class="info-box reveal">
+            <span class="info-label">Performance Tip</span>
+            <p>Always VACUUM and ANALYZE after bulk loads to update query statistics and reclaim space from deleted rows. Redshift performance degrades significantly without regular maintenance.</p>
+          </div>
+        </div>
+      </div>
 
-    <span class="cm"># Verify row count</span>
-    cur.execute(<span class="str">"SELECT COUNT(*) FROM users"</span>)
-    <span class="kw">print</span>(<span class="str">f"Total rows in users: <span class="op">{</span>cur.fetchone()[0]<span class="op">}</span>"</span>)
-
-conn.close()</code></pre>
-
-<h2>7. Scheduling with EventBridge</h2>
-<h3>terraform/schedule.tf</h3>
-<pre><code><span class="kw">resource</span> <span class="str">"aws_cloudwatch_event_rule"</span> <span class="str">"daily_etl"</span> {
-  name                = <span class="str">"daily-etl-trigger"</span>
-  schedule_expression = <span class="str">"cron(0 3 * * ? *)"</span>  <span class="cm"># 3 AM UTC daily</span>
-}
-
-<span class="kw">resource</span> <span class="str">"aws_cloudwatch_event_target"</span> <span class="str">"trigger_glue"</span> {
-  rule     = aws_cloudwatch_event_rule.daily_etl.name
-  arn      = aws_glue_job.transform.arn
-  role_arn = aws_iam_role.eventbridge_glue.arn
+      <div class="step">
+        <div class="step-num">06</div>
+        <div class="step-content">
+          <h3>Step Functions Orchestration</h3>
+          <p>Use Step Functions to sequence the pipeline stages with error handling, retries, and failure notifications. Each stage only starts if the previous one succeeded.</p>
+          <pre><code">{
+  "Comment": "ETL Pipeline Orchestration",
+  "StartAt": "IngestFromAPI",
+  "States": {
+    "IngestFromAPI": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {"FunctionName": "etl-ingest-orders"},
+      "Retry": [{"ErrorEquals": ["States.ALL"], "MaxAttempts": 3, "IntervalSeconds": 60}],
+      "Catch": [{"ErrorEquals": ["States.ALL"], "Next": "NotifyFailure"}],
+      "Next": "TransformBronzeToSilver"
+    },
+    "TransformBronzeToSilver": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {"JobName": "bronze-to-silver"},
+      "Retry": [{"ErrorEquals": ["States.ALL"], "MaxAttempts": 2}],
+      "Catch": [{"ErrorEquals": ["States.ALL"], "Next": "NotifyFailure"}],
+      "Next": "AggregateToGold"
+    },
+    "AggregateToGold": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {"JobName": "silver-to-gold"},
+      "Next": "LoadToRedshift"
+    },
+    "LoadToRedshift": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {"FunctionName": "etl-redshift-load"},
+      "Next": "NotifySuccess"
+    },
+    "NotifySuccess": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {"TopicArn": "arn:aws:sns:us-east-1:xxx:etl-alerts", "Message": "ETL pipeline completed successfully"},
+      "End": true
+    },
+    "NotifyFailure": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {"TopicArn": "arn:aws:sns:us-east-1:xxx:etl-alerts", "Message.$": "$.error"},
+      "End": true
+    }
+  }
 }</code></pre>
+        </div>
+      </div>
 
-<h2>8. CloudWatch Monitoring & SNS Alerts</h2>
-<h3>terraform/monitoring.tf</h3>
-<pre><code><span class="kw">resource</span> <span class="str">"aws_sns_topic"</span> <span class="str">"etl_alerts"</span> {
-  name = <span class="str">"etl-failure-alerts"</span>
-}
+    </div>
+  </div>
 
-<span class="kw">resource</span> <span class="str">"aws_sns_topic_subscription"</span> <span class="str">"email"</span> {
-  topic_arn = aws_sns_topic.etl_alerts.arn
-  protocol  = <span class="str">"email"</span>
-  endpoint  = <span class="str">"ops-team@company.com"</span>
-}
+  <div class="section reveal">
+    <div class="section-num">Reference</div>
+    <h2>Data Layer Summary</h2>
+    <table class="reveal">
+      <tr><th>Layer</th><th>Storage</th><th>Format</th><th>Retention</th><th>Purpose</th></tr>
+      <tr><td>Bronze</td><td>S3</td><td>JSON / CSV (raw)</td><td>90 days → Glacier</td><td>Immutable raw source data, reprocessing source</td></tr>
+      <tr><td>Silver</td><td>S3</td><td>Parquet, partitioned</td><td>1 year</td><td>Cleaned, deduplicated, typed data</td></tr>
+      <tr><td>Gold</td><td>S3 + Redshift</td><td>Parquet + Redshift tables</td><td>3 years</td><td>Business-ready aggregations for BI tools</td></tr>
+    </table>
+  </div>
 
-<span class="kw">resource</span> <span class="str">"aws_cloudwatch_metric_alarm"</span> <span class="str">"glue_failure"</span> {
-  alarm_name          = <span class="str">"glue-job-failure"</span>
-  comparison_operator = <span class="str">"GreaterThanThreshold"</span>
-  evaluation_periods  = <span class="num">1</span>
-  metric_name         = <span class="str">"glue.driver.aggregate.numFailedTasks"</span>
-  namespace           = <span class="str">"Glue"</span>
-  period              = <span class="num">300</span>
-  statistic           = <span class="str">"Sum"</span>
-  threshold           = <span class="num">0</span>
-  alarm_actions       = [aws_sns_topic.etl_alerts.arn]
-  dimensions = { JobName = aws_glue_job.transform.name }
-}</code></pre>
+</div>
 
-<h2>9. Testing</h2>
-<pre><code><span class="cm"># Generate sample test data</span>
-python -c <span class="str">"
-import json
-data = [{'id': i, 'name': f'User {i}', 'email': f'user{i}@test.com'}
-        for i in range(100)]
-with open('test_data.json', 'w') as f:
-    json.dump(data, f)
-"</span>
+<footer>Stefan Lazarevic — Technical Product Manager — Queens, New York — 2026</footer>
 
-<span class="cm"># Upload test data</span>
-aws s3 cp test_data.json s3://mycompany-raw-data/api/2026/01/01/users.json
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Scroll progress line
+  const line = document.getElementById('scrollLine');
+  if (line) {
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      line.style.width = pct + '%';
+    }, {passive: true});
+  }
 
-<span class="cm"># Run Glue job manually</span>
-aws glue start-job-run --job-name daily-transform
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, {threshold: 0.07});
+    revealEls.forEach(el => obs.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('visible'));
+  }
+});
+</script>
 
-<span class="cm"># Check job status</span>
-aws glue get-job-runs --job-name daily-transform --max-items <span class="num">1</span>
-
-<span class="cm"># Verify output in S3</span>
-aws s3 ls s3://mycompany-processed-data/cleaned/ --recursive</code></pre>
-
-<div class="note">Always test with a small dataset first. Use Glue job bookmarks to avoid reprocessing data on subsequent runs.</div>
-
-<footer>Stefan Laza — DevOps Engineer — 2026</footer>
-</div></body></html>
+</body>
+</html>
